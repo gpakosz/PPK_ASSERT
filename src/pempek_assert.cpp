@@ -317,6 +317,7 @@ namespace implementation {
                                           const char* message, ...)
   {
     char message_[PEMPEK_ASSERT_MESSAGE_BUFFER_SIZE] = {0};
+    const char* file_;
 
     if (message)
     {
@@ -329,11 +330,12 @@ namespace implementation {
     }
 
 #if defined(_WIN32)
-    file = strrchr(file, '\\') + 1;
+    file_ = strrchr(file, '\\');
 #else
-    file = strrchr(file, '/') + 1;
+    file_ = strrchr(file, '/');
 #endif // #if defined(_WIN32)
 
+    file = file_ ? file_ + 1 : file;
     AssertAction::AssertAction action = _handler(file, line, function, expression, level, message);
 
     switch (action)
