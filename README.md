@@ -1,5 +1,36 @@
 # Assert: a cross platform drop-in + self-contained C++ assertion library
 
+## TLDR
+
+    #include <boost/assert.hpp>
+    #include <sstream>
+
+    int main()
+    {
+      float min = 0.0f;
+      float max = 1.0f;
+      float v = 2.0f;
+      BOOST_ASSERT_MSG(v > min && v < max, static_cast<std::ostringstream&>(std::ostringstream().seekp(0) << \
+                      "invalid value: " << v << ", must be between " << min << " and " << max).str().c_str());
+      return 0;
+    }
+
+**vs**
+
+    #include <pempek_assert.h>
+
+    int main()
+    {
+      float min = 0.0f;
+      float max = 1.0f;
+      float v = 2.0f;
+      PEMPEK_ASSERT(v > min && v < max, "invalid value: %f, must be between %f and %f", v, min, max);
+      
+      return 0;
+    }
+
+Now which do you prefer? I know which I prefer.
+
 ## Why?
 
 It all started with the need to provide a meaningful message when assertions
