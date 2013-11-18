@@ -371,13 +371,20 @@ namespace implementation {
                                                       int level,
                                                       const char* message);
 
+
+#if defined(__GNUC__)
+#  define PEMPEK_ASSERT_HANDLE_ASSERT_FORMAT __attribute__((format (printf, 7, 8)))
+#else
+#  define PEMPEK_ASSERT_HANDLE_ASSERT_FORMAT
+#endif
+
   AssertAction::AssertAction handleAssert(const char* file,
                                           int line,
                                           const char* function,
                                           const char* expression,
                                           int level,
                                           bool& ignoreLine,
-                                          const char* message, ...);
+                                          const char* message, ...) PEMPEK_ASSERT_HANDLE_ASSERT_FORMAT;
 
   AssertHandler setAssertHandler(AssertHandler handler);
 
