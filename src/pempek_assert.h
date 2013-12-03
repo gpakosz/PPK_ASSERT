@@ -119,7 +119,7 @@
 #  if defined(__APPLE__)
 #  include <TargetConditionals.h>
 #  endif
-#  if defined(__clang__) && !TARGET_OS_IPHONE && !!TARGET_IPHONE_SIMULATOR
+#  if defined(__clang__) && !TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
 #    define PEMPEK_ASSERT_DEBUG_BREAK() __builtin_debugtrap()
 #  elif defined(linux) || defined(__linux) || defined(__linux__) || defined(__APPLE__)
 #    include <signal.h>
