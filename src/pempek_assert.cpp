@@ -3,7 +3,7 @@
 
 #include <pempek_assert.h>
 
-#include <cstdio>  // fprintf() and sprintf()
+#include <cstdio>  // fprintf() and vsnprintf()
 #include <cstring>
 #include <cstdarg> // va_start() and va_end()
 #include <cstdlib> // abort()
