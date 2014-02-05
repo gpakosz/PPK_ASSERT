@@ -398,10 +398,9 @@ namespace implementation {
   {
     public:
     AssertUsedWrapper(T&& t);
-    AssertUsedWrapper(const AssertUsedWrapper& rhs);
     ~AssertUsedWrapper() PEMPEK_ASSERT_EXCEPTION_NO_THROW;
 
-    operator T() const;
+    operator T();
 
     private:
     const AssertUsedWrapper& operator = (const AssertUsedWrapper&); // not implemented on purpose (and only VS2013 supports deleted functions)
@@ -412,25 +411,19 @@ namespace implementation {
   }; // AssertUsedWrapper<int, T>
 
   template<int level, typename T>
-  PEMPEK_ASSERT_ALWAYS_INLINE AssertUsedWrapper<level, T>::AssertUsedWrapper(T&& t)
+  inline AssertUsedWrapper<level, T>::AssertUsedWrapper(T&& t)
     : t(std::forward<T>(t)), used(false)
   {}
 
   template<int level, typename T>
-  PEMPEK_ASSERT_ALWAYS_INLINE AssertUsedWrapper<level, T>::AssertUsedWrapper(const AssertUsedWrapper& rhs)
-  : t(std::move(rhs.t)), used(rhs.used)
-  {}
-
-  template<int level, typename T>
-  PEMPEK_ASSERT_ALWAYS_INLINE AssertUsedWrapper<level, T>::operator T() const
+  inline AssertUsedWrapper<level, T>::operator T()
   {
     used = true;
-    return t;
+    return std::move(t);
   }
 
-  // /!\ GCC is not so happy if we inline that destructor
   template<int level, typename T>
-  AssertUsedWrapper<level, T>::~AssertUsedWrapper() PEMPEK_ASSERT_EXCEPTION_NO_THROW
+  inline AssertUsedWrapper<level, T>::~AssertUsedWrapper() PEMPEK_ASSERT_EXCEPTION_NO_THROW
   {
     PEMPEK_ASSERT_3(level, used, "unused value");
   }

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 #include <pempek_assert.h>
 
@@ -33,9 +34,9 @@ void trigger_assert_custom1()
   ASSERT_CUSTOM(100, ptr != 0, "invalid ptr: must not be null");
 }
 
-ASSERT_USED(int) trigger_assert_unused_return_value1()
+ASSERT_USED(std::vector<int>) trigger_assert_unused_return_value1()
 {
-  return 0;
+  return std::vector<int>(10);
 }
 
 #undef PEMPEK_ASSERT_ENABLED
@@ -92,6 +93,9 @@ int main()
   trigger_assert_custom2();
 
   {
+    std::vector<int> v = trigger_assert_unused_return_value1();
+    v.clear();
+
     // trigger assert on scope exit
     trigger_assert_unused_return_value1();
   }
