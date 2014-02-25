@@ -85,7 +85,13 @@ namespace {
         fflush(stderr);
 
         char line[256];
-        fgets(line, sizeof(line), stdin);
+        if (!fgets(line, sizeof(line), stdin))
+        {
+          clearerr(stdin);
+          fprintf(stderr, "\n");
+          fflush(stderr);
+          continue;
+        }
 
         // we eventually skip the leading spaces but that's it
         char input[2] = {'b', 0};
