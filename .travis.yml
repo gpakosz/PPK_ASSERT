@@ -1,0 +1,8 @@
+language: cpp
+compiler:
+  - clang
+  - gcc
+env:
+  - TARGET=build
+  - TARGET=test
+script: make -C ./_gnu-make $TARGET

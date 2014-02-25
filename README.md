@@ -1,4 +1,5 @@
 # Assert: a cross platform drop-in + self-contained C++ assertion library
+[![Build Status](https://travis-ci.org/gpakosz/Assert.png?branch=master)](https://travis-ci.org/gpakosz/Assert)
 
 ## TLDR
 
