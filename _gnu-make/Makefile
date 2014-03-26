@@ -9,13 +9,13 @@ ifeq ($(platform),)
   __uname_s := $(shell sh -c 'uname -s 2>/dev/null | tr [A-Z] [a-z] || echo unknown-platform')
   __uname_m := $(shell sh -c 'uname -m 2>/dev/null | tr [A-Z] [a-z] || echo unknown-architecture')
 
-	ifeq ($(__uname_s),linux)
-		override platform := linux
-		override architecture := $(__uname_m)
-	endif
+  ifeq ($(__uname_s),linux)
+    override platform := linux
+    override architecture := $(__uname_m)
+  endif
   ifeq ($(__uname_s),darwin)
     override platform := mac
-		override architecture := $(__uname_m)
+    override architecture := $(__uname_m)
   endif
 endif
 ifeq ($(architecture),)
