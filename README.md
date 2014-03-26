@@ -57,8 +57,11 @@ providing the following features:
 
 ## What?
 
-The library is designed to be lightweight would you dedice to keep assertions
-enabled even in release builds.
+The library is designed to be lightweight would you decide to keep assertions
+enabled even in release builds (`#define PEMPEK_ASSERT_ENABLED 1`).
+
+Each assertion eats up `sizeof(bool)` of stack, used to keep track whether the
+assertion should be ignored for the remaining lifetime of the program.
 
 ### Message Formatting
 
