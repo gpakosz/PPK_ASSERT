@@ -13,7 +13,20 @@
 #endif
 
 #if !defined(PEMPEK_ASSERT_MESSAGE_BUFFER_SIZE)
-#  define PEMPEK_ASSERT_MESSAGE_BUFFER_SIZE 1024
+#  define PEMPEK_ASSERT_MESSAGE_BUFFER_SIZE PEMPEK_ASSERT_EXCEPTION_MESSAGE_BUFFER_SIZE
+#endif
+
+// malloc and free are only used by AssertionException implemented in terms of
+// short string optimization.
+// However, no memory allocation happens if
+// PEMPEK_ASSERT_EXCEPTION_MESSAGE_BUFFER_SIZE == PEMPEK_ASSERT_MESSAGE_BUFFER_SIZE
+// which is the default.
+#if !defined(PEMPEK_ASSERT_MALLOC)
+#define PEMPEK_ASSERT_MALLOC(size) malloc(size)
+#endif
+
+#if !defined(PEMPEK_ASSERT_FREE)
+#define PEMPEK_ASSERT_FREE(p) free(p)
 #endif
 
 namespace {
@@ -172,7 +185,7 @@ namespace assert {
     }
     else // allocate storage on the heap
     {
-      _heap = static_cast<char*>(malloc(sizeof(char) * (length + 1)));
+      _heap = static_cast<char*>(PEMPEK_ASSERT_MALLOC(sizeof(char) * (length + 1)));
 
       if (!_heap) // allocation failed
       {
@@ -200,7 +213,7 @@ namespace assert {
     }
     else // allocate storage on the heap
     {
-      _heap = static_cast<char*>(malloc(sizeof(char) * (length + 1)));
+      _heap = static_cast<char*>(PEMPEK_ASSERT_MALLOC(sizeof(char) * (length + 1)));
 
       if (!_heap) // allocation failed
       {
@@ -219,7 +232,7 @@ namespace assert {
   AssertionException::~AssertionException() PEMPEK_ASSERT_EXCEPTION_NO_THROW
   {
     if (_stack[size - 1])
-      free(_heap);
+      PEMPEK_ASSERT_FREE(_heap);
 
     _heap = PEMPEK_ASSERT_NULLPTR; // in case the exception object is destroyed twice
     _stack[size - 1] = 0;
@@ -236,7 +249,7 @@ namespace assert {
     if (length < size) // message is short enough for the stack buffer
     {
       if (_stack[size - 1])
-        free(_heap);
+        PEMPEK_ASSERT_FREE(_heap);
 
       strncpy(_stack, message, size);
     }
@@ -253,11 +266,11 @@ namespace assert {
         }
         else
         {
-          free(_heap);
+          PEMPEK_ASSERT_FREE(_heap);
         }
       }
 
-      _heap = static_cast<char*>(malloc(sizeof(char) * (length + 1)));
+      _heap = static_cast<char*>(PEMPEK_ASSERT_MALLOC(sizeof(char) * (length + 1)));
 
       if (!_heap) // allocation failed
       {

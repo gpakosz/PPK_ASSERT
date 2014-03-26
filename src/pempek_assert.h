@@ -95,13 +95,13 @@
   32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16,\
   15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, PEMPEK_ASSERT_NO_MACRO)
 #define PEMPEK_ASSERT_NARG_(_0, _1, _2, _3, _4, _5, _6, _7, _8,\
-                        _9, _10, _11, _12, _13, _14, _15, _16,\
-                        _17, _18, _19, _20, _21, _22, _23, _24,\
-                        _25, _26, _27, _28, _29, _30, _31, _32, _33, ...) _33
+                            _9, _10, _11, _12, _13, _14, _15, _16,\
+                            _17, _18, _19, _20, _21, _22, _23, _24,\
+                            _25, _26, _27, _28, _29, _30, _31, _32, _33, ...) _33
 
 #define PEMPEK_ASSERT_HAS_ONE_ARG(...) PEMPEK_ASSERT_APPLY_VA_ARGS(PEMPEK_ASSERT_NARG_, PEMPEK_ASSERT_NO_MACRO,##__VA_ARGS__,\
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, PEMPEK_ASSERT_NO_MACRO)
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, PEMPEK_ASSERT_NO_MACRO)
 
 #if defined(__GNUC__)
 #  define PEMPEK_ASSERT_LIKELY(arg) __builtin_expect(!!(arg), !0)
@@ -229,7 +229,7 @@ namespace implementation {
 #endif
 
 #if !defined(PEMPEK_ASSERT_EXCEPTION_MESSAGE_BUFFER_SIZE)
-#  define PEMPEK_ASSERT_EXCEPTION_MESSAGE_BUFFER_SIZE 128
+#  define PEMPEK_ASSERT_EXCEPTION_MESSAGE_BUFFER_SIZE 1024
 #endif
 
 #if defined(PEMPEK_ASSERT_CXX11) && !defined(_MSC_VER)
