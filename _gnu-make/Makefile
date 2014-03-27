@@ -30,6 +30,7 @@ buildir := $(realpath .)/build
 binsubdir := $(platform)-$(architecture)
 bindir := $(prefix)/bin/$(binsubdir)
 
+CPPFLAGS := -DPEMPEK_ASSERT_LOG_FILE=\"assert.txt\" -DPEMPEK_ASSERT_LOG_FILE_TRUNCATE
 CXXFLAGS := -O2 -g
 
 ifeq ($(platform),linux)

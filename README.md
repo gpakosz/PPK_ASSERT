@@ -121,6 +121,15 @@ If you know you're going to launch your program from within a login shell
 session on iOS or Android (e.g. through SSH), define the
 `PEMPEK_ASSERT_DEFAULT_HANDLER_STDIN` preprocessor token.
 
+The default handler supports optional logging to a file (suggested by
+[@nothings]):
+
+- `#define PEMPEK_ASSERT_LOG_FILE "/tmp/assert.txt"`
+- to truncate the log file upon each program invocation, `#define
+  PEMPEK_ASSERT_LOG_FILE_TRUNCATE`
+
+[@nothings]: https://twitter.com/nothings
+
 ### Providing Your Own Handler
 
 If you want to change the default behavior, e.g. by opening a dialog box or

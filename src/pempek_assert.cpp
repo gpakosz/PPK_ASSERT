@@ -12,9 +12,8 @@
 #include <TargetConditionals.h>
 #endif
 
-#if !defined(PEMPEK_ASSERT_MESSAGE_BUFFER_SIZE)
-#  define PEMPEK_ASSERT_MESSAGE_BUFFER_SIZE PEMPEK_ASSERT_EXCEPTION_MESSAGE_BUFFER_SIZE
-#endif
+//#define PEMPEK_ASSERT_LOG_FILE "/tmp/assert.txt"
+//#define PEMPEK_ASSERT_LOG_FILE_TRUNCATE
 
 // malloc and free are only used by AssertionException implemented in terms of
 // short string optimization.
@@ -29,14 +28,62 @@
 #define PEMPEK_ASSERT_FREE(p) free(p)
 #endif
 
+#if !defined(PEMPEK_ASSERT_MESSAGE_BUFFER_SIZE)
+#  define PEMPEK_ASSERT_MESSAGE_BUFFER_SIZE PEMPEK_ASSERT_EXCEPTION_MESSAGE_BUFFER_SIZE
+#endif
+
 namespace {
 
   namespace AssertLevel = pempek::assert::implementation::AssertLevel;
   namespace AssertAction = pempek::assert::implementation::AssertAction;
 
-  typedef int (*printHandler)(void*, const char* format, ...);
+  typedef int (*printHandler)(FILE* out, const char* format, ...);
 
-  int formatLevel(int level, const char* expression, void* out, printHandler print)
+#if defined(PEMPEK_ASSERT_LOG_FILE) && defined(PEMPEK_ASSERT_LOG_FILE_TRUNCATE)
+  struct LogFileTruncate
+  {
+    LogFileTruncate()
+    {
+      if (FILE* f = fopen(PEMPEK_ASSERT_LOG_FILE, "w"))
+        fclose(f);
+    }
+  };
+
+  static LogFileTruncate truncate;
+#endif
+
+  int print(FILE* out, const char* format, ...)
+  {
+    va_list args;
+    int count;
+
+    va_start(args, format);
+    count = vfprintf(out, format, args);
+    fflush(out);
+    va_end(args);
+
+#if defined(PEMPEK_ASSERT_LOG_FILE)
+    struct Local
+    {
+      static void log(const char* format, va_list args)
+      {
+        if (FILE* f = fopen(PEMPEK_ASSERT_LOG_FILE, "a"))
+        {
+          vfprintf(f, format, args);
+          fclose(f);
+        }
+      }
+    };
+
+    va_start(args, format);
+    Local::log(format, args);
+    va_end(args);
+#endif
+
+    return count;
+  }
+
+  int formatLevel(int level, const char* expression, FILE* out, printHandler print)
   {
     int count = 0;
 
@@ -56,7 +103,6 @@ namespace {
         count += print(out, " (ERROR)");
         break;
 
-
       case AssertLevel::PEMPEK_ASSERT_LEVEL_FATAL:
         count += print(out, " (FATAL)");
         break;
@@ -75,15 +121,11 @@ namespace {
                                               int level,
                                               const char* message)
   {
-    formatLevel(level, expression, stderr, reinterpret_cast<printHandler>(::fprintf));
-    fprintf(stderr, "\n  in file %s, line %d\n  function: %s\n", file, line, function);
-    fflush(stderr);
+    formatLevel(level, expression, stderr, reinterpret_cast<printHandler>(print));
+    print(stderr, "\n  in file %s, line %d\n  function: %s\n", file, line, function);
 
     if (message)
-    {
-      fprintf(stderr, "  with message: %s\n\n", message);
-      fflush(stderr);
-    }
+      print(stderr, "  with message: %s\n\n", message);
 
     if (level < AssertLevel::PEMPEK_ASSERT_LEVEL_DEBUG)
     {
