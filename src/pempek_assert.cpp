@@ -1,6 +1,13 @@
 // see README.md for usage instructions.
 // (‑●‑●)> released under the WTFPL v2 license, by Gregory Pakosz (@gpakosz)
 
+#if defined(_WIN32)
+#define VC_EXTRALEAN
+#define WIN32_LEAN_AND_MEAN
+#define _CRT_SECURE_NO_WARNINGS
+#include <windows.h>
+#endif
+
 #include <pempek_assert.h>
 
 #include <cstdio>  // fprintf() and vsnprintf()
@@ -80,6 +87,14 @@ namespace {
     va_end(args);
 #endif
 
+#if defined(_WIN32)
+    char buffer[PEMPEK_ASSERT_MESSAGE_BUFFER_SIZE];
+    va_start(args, format);
+    vsnprintf(buffer, PEMPEK_ASSERT_MESSAGE_BUFFER_SIZE, format, args);
+    ::OutputDebugStringA(buffer);
+    va_end(args);
+#endif
+
     return count;
   }
 
@@ -121,6 +136,20 @@ namespace {
                                               int level,
                                               const char* message)
   {
+#if defined(_WIN32)
+    if (::GetConsoleWindow() == NULL)
+    {
+      if (::AllocConsole())
+      {
+        (void)freopen("CONIN$", "r", stdin);
+        (void)freopen("CONOUT$", "w", stdout);
+        (void)freopen("CONOUT$", "w", stderr);
+
+        SetFocus(::GetConsoleWindow());
+      }
+    }
+#endif
+
     formatLevel(level, expression, stderr, reinterpret_cast<printHandler>(print));
     print(stderr, "\n  in file %s, line %d\n  function: %s\n", file, line, function);
 

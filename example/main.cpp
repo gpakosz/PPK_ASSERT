@@ -58,7 +58,14 @@ ASSERT_USED(int) trigger_assert_unused_return_value2()
 #define PEMPEK_ASSERT_ENABLED 1
 #include <pempek_assert.h>
 
+#if defined(_WIN32)
+#define VC_EXTRALEAN
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+int CALLBACK WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
+#else
 int main()
+#endif
 {
   ASSERT(true);
   ASSERT_WARNING(true);

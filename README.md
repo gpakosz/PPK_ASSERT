@@ -121,6 +121,10 @@ And waits for input on `stdin`:
   the system will prompt the user to attach a debugger)
 - Abort: call `abort()` immediately
 
+Under the Windows platform, the default handler also uses `OutputDebugString`
+and in the case of a GUI application allocates a console upon encountering the
+first failed assertion.
+
 The default handler supports optional logging to a file (suggested by
 [@nothings]):
 
