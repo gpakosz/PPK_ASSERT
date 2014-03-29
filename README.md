@@ -26,7 +26,7 @@
       float max = 1.0f;
       float v = 2.0f;
       PEMPEK_ASSERT(v > min && v < max, "invalid value: %f, must be between %f and %f", v, min, max);
-      
+
       return 0;
     }
 
@@ -98,16 +98,20 @@ levels:
 
 - `WARNING <= level < DEBUG`: print the assertion message to `stderr`
 - `DEBUG <= level < ERROR`: print the assertion message to `stderr` and prompt
-   the user for action
+   the user for action (disabled by default on iOS and Android)
 - `ERROR <= level < FATAL`: throw an `AssertionException`
 - `FATAL < level`: abort the program
+
+If you know you're going to launch your program from within a login shell
+session on iOS or Android (e.g. through SSH), define the
+`PEMPEK_ASSERT_DEFAULT_HANDLER_STDIN` preprocessor token.
 
 When prompting for user action, the default handler prints the following
 message on `stderr`:
 
     `Press (I)gnore / Ignore (F)orever / Ignore (A)ll / (D)ebug / A(b)ort:`
 
-And waits for input on `stdin` (except on iOS and Android platforms):
+And waits for input on `stdin`:
 
 - Ignore: ignore the current assertion
 - Ignore Forever: remember the file and line where the assertion fired and
@@ -116,10 +120,6 @@ And waits for input on `stdin` (except on iOS and Android platforms):
 - Debug: break into the debugger if attached, otherwise `abort()` (on Windows,
   the system will prompt the user to attach a debugger)
 - Abort: call `abort()` immediately
-
-If you know you're going to launch your program from within a login shell
-session on iOS or Android (e.g. through SSH), define the
-`PEMPEK_ASSERT_DEFAULT_HANDLER_STDIN` preprocessor token.
 
 The default handler supports optional logging to a file (suggested by
 [@nothings]):
@@ -144,7 +144,7 @@ following signature:
                                                         const char* message);
 
 Your handler will be called with the proper information filled and needs to
-return the action to be performed: 
+return the action to be performed:
 
     PEMPEK_ASSERT_ACTION_NONE,
     PEMPEK_ASSERT_ACTION_ABORT,
@@ -263,7 +263,7 @@ There is an Xcode project located in the `_ios-xcode/` folder.
 If you prefer compiling from command line and deploying to a jailbroken device
 through SSH, use:
 
-    $ make -C _gnu-make/ binsubdir=ios CXX="$(xcrun --sdk iphoneos --find clang++) -isysroot $(xcrun --sdk iphoneos --show-sdk-path) -arch armv7 -arch armv7s -arch arm64" CXXFLAGS=-DPEMPEK_ASSERT_DEFAULT_HANDLER_STDIN postbuild="codesign -s 'iPhone Developer'"
+    $ make -C _gnu-make/ binsubdir=ios CXX="$(xcrun --sdk iphoneos --find clang++) -isysroot $(xcrun --sdk iphoneos --show-sdk-path) -arch armv7 -arch armv7s -arch arm64" CPPFLAGS=-DPEMPEK_ASSERT_DEFAULT_HANDLER_STDIN postbuild="codesign -s 'iPhone Developer'"
 
 ### Compiling for Android
 
@@ -278,7 +278,7 @@ command:
 
 Now you can compile the self test and self benchmark programs by running:
 
-    $ make -C _gnu-make/ binsubdir=android CXX=/tmp/android-clang/bin/clang++ CXXFLAGS='-march=armv7-a -mfloat-abi=softfp -O2'
+    $ make -C _gnu-make/ binsubdir=android CXX=/tmp/android-clang/bin/clang++ CXXFLAGS='-march=armv7-a -mfloat-abi=softfp -O2' CPPFLAGS=-DPEMPEK_ASSERT_DEFAULT_HANDLER_STDIN
 
 --------------------------------------------------------------------------------
 
