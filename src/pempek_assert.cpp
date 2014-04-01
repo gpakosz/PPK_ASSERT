@@ -39,6 +39,10 @@
 #  define PEMPEK_ASSERT_MESSAGE_BUFFER_SIZE PEMPEK_ASSERT_EXCEPTION_MESSAGE_BUFFER_SIZE
 #endif
 
+#if !defined(PEMPEK_ASSERT_ABORT)
+#define PEMPEK_ASSERT_ABORT abort
+#endif
+
 namespace {
 
   namespace AssertLevel = pempek::assert::implementation::AssertLevel;
@@ -431,7 +435,7 @@ namespace implementation {
     switch (action)
     {
       case AssertAction::PEMPEK_ASSERT_ACTION_ABORT:
-        abort();
+        PEMPEK_ASSERT_ABORT();
 
       case AssertAction::PEMPEK_ASSERT_ACTION_IGNORE_LINE:
         ignoreLine = true;
