@@ -272,7 +272,7 @@ through SSH, use:
 ### Compiling for Android
 
 You will have to install the Android NDK, and point the `$NDK_ROOT` environment
-variable to the NDK path: e.g. `export NDK_ROOT = /opt/android-ndk` (without a
+variable to the NDK path: e.g. `export NDK_ROOT=/opt/android-ndk` (without a
 trailing `/` character).
 
 Next, the easy way is to make a standalone Android toolchain with the following
