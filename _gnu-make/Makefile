@@ -62,7 +62,7 @@ build-example: $(bindir)/example
 
 $(bindir)/example: $(srcdir)/pempek_assert.cpp $(srcdir)/pempek_assert.h $(exampledir)/main.cpp 
 	mkdir -p $(@D)
-	$(CXX) -o $@ -I $(srcdir) $(CPPFLAGS) $(CXXFLAGS) $(filter-out %.h,$^)
+	$(CXX) -o $@ -I $(srcdir) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $(filter-out %.h,$^)
 	$(if $(postbuild),$(postbuild) $@)
 
 .PHONY: test

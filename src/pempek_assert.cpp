@@ -19,6 +19,13 @@
 #include <TargetConditionals.h>
 #endif
 
+#if defined(__ANDROID__) || defined(ANDROID)
+#include <android/log.h>
+#if !defined(PEMPEK_ASSERT_LOG_TAG)
+#define PEMPEK_ASSERT_LOG_TAG "PEMPEK_ASSERT"
+#endif
+#endif
+
 //#define PEMPEK_ASSERT_LOG_FILE "/tmp/assert.txt"
 //#define PEMPEK_ASSERT_LOG_FILE_TRUNCATE
 
@@ -48,7 +55,7 @@ namespace {
   namespace AssertLevel = pempek::assert::implementation::AssertLevel;
   namespace AssertAction = pempek::assert::implementation::AssertAction;
 
-  typedef int (*printHandler)(FILE* out, const char* format, ...);
+  typedef int (*printHandler)(FILE* out, int, const char* format, ...);
 
 #if defined(PEMPEK_ASSERT_LOG_FILE) && defined(PEMPEK_ASSERT_LOG_FILE_TRUNCATE)
   struct LogFileTruncate
@@ -63,7 +70,7 @@ namespace {
   static LogFileTruncate truncate;
 #endif
 
-  int print(FILE* out, const char* format, ...)
+  int print(FILE* out, int level, const char* format, ...)
   {
     va_list args;
     int count;
@@ -99,38 +106,55 @@ namespace {
     va_end(args);
 #endif
 
+#if defined(__ANDROID__) || defined(ANDROID)
+    int priority = ANDROID_LOG_VERBOSE;
+
+    if (level >= AssertLevel::PEMPEK_ASSERT_LEVEL_DEBUG)
+      priority = ANDROID_LOG_DEBUG;
+    else if (level >= AssertLevel::PEMPEK_ASSERT_LEVEL_WARNING)
+      priority = ANDROID_LOG_WARN;
+    else if (level >= AssertLevel::PEMPEK_ASSERT_LEVEL_ERROR)
+      priority = ANDROID_LOG_ERROR;
+    else if (level >= AssertLevel::PEMPEK_ASSERT_LEVEL_FATAL)
+      priority = ANDROID_LOG_FATAL;
+
+    va_start(args, format);
+    __android_log_vprint(priority, PEMPEK_ASSERT_LOG_TAG, format, args); 
+    va_start(args, format);
+#else
+    PEMPEK_ASSERT_UNUSED(level);
+#endif
+
     return count;
   }
 
   int formatLevel(int level, const char* expression, FILE* out, printHandler print)
   {
-    int count = 0;
-
-    count += print(out, "Assertion '%s' failed", expression);
+    const char* levelstr = 0;
 
     switch (level)
     {
-      case AssertLevel::PEMPEK_ASSERT_LEVEL_WARNING:
-        count += print(out, " (WARNING)");
-        break;
-
       case AssertLevel::PEMPEK_ASSERT_LEVEL_DEBUG:
-        count += print(out, " (DEBUG)");
+        levelstr = "DEBUG";
         break;
-
+      case AssertLevel::PEMPEK_ASSERT_LEVEL_WARNING:
+        levelstr = "WARNING";
+        break;
       case AssertLevel::PEMPEK_ASSERT_LEVEL_ERROR:
-        count += print(out, " (ERROR)");
+        levelstr = "ERROR";
         break;
-
       case AssertLevel::PEMPEK_ASSERT_LEVEL_FATAL:
-        count += print(out, " (FATAL)");
+        levelstr = "FATAL";
         break;
 
       default:
-        count += print(out, " (level = %d)", level);
+        break;
     }
 
-    return count;
+    if (levelstr)
+      return print(out, level, "Assertion '%s' failed (%s)\n", expression, levelstr);
+    else
+      return print(out, level, "Assertion '%s' failed (level = %d)\n", expression, level);
   }
 
   AssertAction::AssertAction _defaultHandler( const char* file,
@@ -155,10 +179,10 @@ namespace {
 #endif
 
     formatLevel(level, expression, stderr, reinterpret_cast<printHandler>(print));
-    print(stderr, "\n  in file %s, line %d\n  function: %s\n", file, line, function);
+    print(stderr, level, "  in file %s, line %d\n  function: %s\n", file, line, function);
 
     if (message)
-      print(stderr, "  with message: %s\n\n", message);
+      print(stderr, level, "  with message: %s\n\n", message);
 
     if (level < AssertLevel::PEMPEK_ASSERT_LEVEL_DEBUG)
     {

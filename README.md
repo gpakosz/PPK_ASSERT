@@ -125,6 +125,9 @@ Under the Windows platform, the default handler also uses `OutputDebugString`
 and in the case of a GUI application allocates a console upon encountering the
 first failed assertion.
 
+Under the Android platform, the default handler also sends log messages to the
+in-kernel log buffer, which can later be accessed through the `logcat` utility.
+
 The default handler supports optional logging to a file (suggested by
 [@nothings]):
 
@@ -282,7 +285,7 @@ command:
 
 Now you can compile the self test and self benchmark programs by running:
 
-    $ make -C _gnu-make/ binsubdir=android CXX=/tmp/android-clang/bin/clang++ CXXFLAGS='-march=armv7-a -mfloat-abi=softfp -O2' CPPFLAGS=-DPEMPEK_ASSERT_DEFAULT_HANDLER_STDIN
+    $ make -C _gnu-make/ binsubdir=android CXX=/tmp/android-clang/bin/clang++ CXXFLAGS='-march=armv7-a -mfloat-abi=softfp -O2' LDFLAGS='-llog' CPPFLAGS=-DPEMPEK_ASSERT_DEFAULT_HANDLER_STDIN
 
 --------------------------------------------------------------------------------
 
