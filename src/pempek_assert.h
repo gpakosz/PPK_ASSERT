@@ -43,7 +43,7 @@
 #endif
 
 #if !defined(PEMPEK_ASSERT_DEFAULT_LEVEL)
-#  define PEMPEK_ASSERT_DEFAULT_LEVEL PEMPEK_ASSERT_LEVEL_DEBUG
+#  define PEMPEK_ASSERT_DEFAULT_LEVEL Debug
 #endif
 
 // -- implementation -----------------------------------------------------------
@@ -52,17 +52,17 @@
 #define PEMPEK_ASSERT_H
 
 #define PEMPEK_ASSERT(...)                    PEMPEK_ASSERT_(pempek::assert::implementation::AssertLevel::PEMPEK_ASSERT_DEFAULT_LEVEL, __VA_ARGS__)
-#define PEMPEK_ASSERT_WARNING(...)            PEMPEK_ASSERT_(pempek::assert::implementation::AssertLevel::PEMPEK_ASSERT_LEVEL_WARNING, __VA_ARGS__)
-#define PEMPEK_ASSERT_DEBUG(...)              PEMPEK_ASSERT_(pempek::assert::implementation::AssertLevel::PEMPEK_ASSERT_LEVEL_DEBUG, __VA_ARGS__)
-#define PEMPEK_ASSERT_ERROR(...)              PEMPEK_ASSERT_(pempek::assert::implementation::AssertLevel::PEMPEK_ASSERT_LEVEL_ERROR, __VA_ARGS__)
-#define PEMPEK_ASSERT_FATAL(...)              PEMPEK_ASSERT_(pempek::assert::implementation::AssertLevel::PEMPEK_ASSERT_LEVEL_FATAL, __VA_ARGS__)
+#define PEMPEK_ASSERT_WARNING(...)            PEMPEK_ASSERT_(pempek::assert::implementation::AssertLevel::Warning, __VA_ARGS__)
+#define PEMPEK_ASSERT_DEBUG(...)              PEMPEK_ASSERT_(pempek::assert::implementation::AssertLevel::Debug, __VA_ARGS__)
+#define PEMPEK_ASSERT_ERROR(...)              PEMPEK_ASSERT_(pempek::assert::implementation::AssertLevel::Error, __VA_ARGS__)
+#define PEMPEK_ASSERT_FATAL(...)              PEMPEK_ASSERT_(pempek::assert::implementation::AssertLevel::Fatal, __VA_ARGS__)
 #define PEMPEK_ASSERT_CUSTOM(level, ...)      PEMPEK_ASSERT_(level, __VA_ARGS__)
 
 #define PEMPEK_ASSERT_USED(...)               PEMPEK_ASSERT_USED_(__VA_ARGS__)
-#define PEMPEK_ASSERT_USED_WARNING(...)       PEMPEK_ASSERT_USED_(pempek::assert::implementation::AssertLevel::PEMPEK_ASSERT_LEVEL_WARNING, __VA_ARGS__)
-#define PEMPEK_ASSERT_USED_DEBUG(...)         PEMPEK_ASSERT_USED_(pempek::assert::implementation::AssertLevel::PEMPEK_ASSERT_LEVEL_DEBUG, __VA_ARGS__)
-#define PEMPEK_ASSERT_USED_ERROR(...)         PEMPEK_ASSERT_USED_(pempek::assert::implementation::AssertLevel::PEMPEK_ASSERT_LEVEL_ERROR, __VA_ARGS__)
-#define PEMPEK_ASSERT_USED_FATAL(...)         PEMPEK_ASSERT_USED_(pempek::assert::implementation::AssertLevel::PEMPEK_ASSERT_LEVEL_FATAL, __VA_ARGS__)
+#define PEMPEK_ASSERT_USED_WARNING(...)       PEMPEK_ASSERT_USED_(pempek::assert::implementation::AssertLevel::Warning, __VA_ARGS__)
+#define PEMPEK_ASSERT_USED_DEBUG(...)         PEMPEK_ASSERT_USED_(pempek::assert::implementation::AssertLevel::Debug, __VA_ARGS__)
+#define PEMPEK_ASSERT_USED_ERROR(...)         PEMPEK_ASSERT_USED_(pempek::assert::implementation::AssertLevel::Error, __VA_ARGS__)
+#define PEMPEK_ASSERT_USED_FATAL(...)         PEMPEK_ASSERT_USED_(pempek::assert::implementation::AssertLevel::Fatal, __VA_ARGS__)
 #define PEMPEK_ASSERT_USED_CUSTOM(level, ...) PEMPEK_ASSERT_USED_(level, __VA_ARGS__)
 
 
@@ -156,7 +156,7 @@
         if (PEMPEK_ASSERT_LIKELY(expression) || _ignore || pempek::assert::implementation::ignoreAllAsserts());\
         else\
         {\
-          if (pempek::assert::implementation::handleAssert(PEMPEK_ASSERT_FILE, PEMPEK_ASSERT_LINE, PEMPEK_ASSERT_FUNCTION, #expression, level, _ignore, __VA_ARGS__) == pempek::assert::implementation::AssertAction::PEMPEK_ASSERT_ACTION_BREAK)\
+          if (pempek::assert::implementation::handleAssert(PEMPEK_ASSERT_FILE, PEMPEK_ASSERT_LINE, PEMPEK_ASSERT_FUNCTION, #expression, level, _ignore, __VA_ARGS__) == pempek::assert::implementation::AssertAction::Break)\
             PEMPEK_ASSERT_DEBUG_BREAK();\
         }\
       }\
@@ -172,7 +172,7 @@
         if (PEMPEK_ASSERT_LIKELY(expression) || _ignore || pempek::assert::implementation::ignoreAllAsserts());\
         else\
         {\
-          if (pempek::assert::implementation::handleAssert(PEMPEK_ASSERT_FILE, PEMPEK_ASSERT_LINE, PEMPEK_ASSERT_FUNCTION, #expression, level, _ignore, __VA_ARGS__) == pempek::assert::implementation::AssertAction::PEMPEK_ASSERT_ACTION_BREAK)\
+          if (pempek::assert::implementation::handleAssert(PEMPEK_ASSERT_FILE, PEMPEK_ASSERT_LINE, PEMPEK_ASSERT_FUNCTION, #expression, level, _ignore, __VA_ARGS__) == pempek::assert::implementation::AssertAction::Break)\
             PEMPEK_ASSERT_DEBUG_BREAK();\
         }\
       }\
@@ -339,10 +339,10 @@ namespace implementation {
 
     enum AssertLevel
     {
-      PEMPEK_ASSERT_LEVEL_DEBUG = 32,
-      PEMPEK_ASSERT_LEVEL_WARNING = 64,
-      PEMPEK_ASSERT_LEVEL_ERROR = 128,
-      PEMPEK_ASSERT_LEVEL_FATAL = 256
+      Debug   = 32,
+      Warning = 64,
+      Error   = 128,
+      Fatal   = 256
 
     }; // AssertLevel
 
@@ -352,13 +352,13 @@ namespace implementation {
 
     enum AssertAction
     {
-      PEMPEK_ASSERT_ACTION_NONE,
-      PEMPEK_ASSERT_ACTION_ABORT,
-      PEMPEK_ASSERT_ACTION_BREAK,
-      PEMPEK_ASSERT_ACTION_IGNORE,
-      PEMPEK_ASSERT_ACTION_IGNORE_LINE,
-      PEMPEK_ASSERT_ACTION_IGNORE_ALL,
-      PEMPEK_ASSERT_ACTION_THROW
+      None,
+      Abort,
+      Break,
+      Ignore,
+      IgnoreLine,
+      IgnoreAll,
+      Throw
 
     }; // AssertAction
 

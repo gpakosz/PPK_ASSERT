@@ -22,7 +22,7 @@ namespace {
   int _level;
   char* _message;
 
-  AssertAction::AssertAction _action = AssertAction::PEMPEK_ASSERT_ACTION_NONE;
+  AssertAction::AssertAction _action = AssertAction::None;
 
   AssertAction::AssertAction _testHandler(const char* file,
                                           int line,
@@ -43,8 +43,8 @@ namespace {
     if (message)
       _message = strdup(message);
 
-    if (level == AssertLevel::PEMPEK_ASSERT_LEVEL_ERROR)
-      return AssertAction::PEMPEK_ASSERT_ACTION_THROW;
+    if (level == AssertLevel::Error)
+      return AssertAction::Throw;
 
     return _action;
   }
@@ -61,7 +61,7 @@ namespace implementation {
     _line = e.line();
     _function = e.function();
     _expression = e.expression();
-    _level = AssertLevel::PEMPEK_ASSERT_LEVEL_ERROR;
+    _level = AssertLevel::Error;
   }
 
 } // namespace implementation
@@ -77,7 +77,7 @@ namespace {
     explicit AssertTest()
     {
       implementation::setAssertHandler(_testHandler);
-      _action = AssertAction::PEMPEK_ASSERT_ACTION_NONE;
+      _action = AssertAction::None;
 
       _message = 0;
     }
@@ -102,13 +102,13 @@ namespace {
     PEMPEK_ASSERT_WARNING(false);
     EXPECT_STREQ("pempek_assert_test.cpp", _file);
     EXPECT_EQ(PEMPEK_ASSERT_LINE - 2, _line);
-    EXPECT_EQ(AssertLevel::PEMPEK_ASSERT_LEVEL_WARNING, _level);
+    EXPECT_EQ(AssertLevel::Warning, _level);
     EXPECT_STREQ(static_cast<const char*>(PEMPEK_ASSERT_NULLPTR), _message);
 
     PEMPEK_ASSERT_WARNING(false, "always false, always fails");
     EXPECT_STREQ("pempek_assert_test.cpp", _file);
     EXPECT_EQ(PEMPEK_ASSERT_LINE - 2, _line);
-    EXPECT_EQ(AssertLevel::PEMPEK_ASSERT_LEVEL_WARNING, _level);
+    EXPECT_EQ(AssertLevel::Warning, _level);
     EXPECT_STREQ("always false, always fails", _message);
 
     const char* s = "foo";
@@ -117,7 +117,7 @@ namespace {
     PEMPEK_ASSERT_WARNING(false, "always false, always fails -- s: %s, i: %d, f: %3.3f", s, i, f);
     EXPECT_STREQ("pempek_assert_test.cpp", _file);
     EXPECT_EQ(PEMPEK_ASSERT_LINE - 2, _line);
-    EXPECT_EQ(AssertLevel::PEMPEK_ASSERT_LEVEL_WARNING, _level);
+    EXPECT_EQ(AssertLevel::Warning, _level);
     EXPECT_STREQ("always false, always fails -- s: foo, i: 123, f: 123.456", _message);
   }
 
@@ -129,13 +129,13 @@ namespace {
     PEMPEK_ASSERT(false);
     EXPECT_STREQ("pempek_assert_test.cpp", _file);
     EXPECT_EQ(PEMPEK_ASSERT_LINE - 2, _line);
-    EXPECT_EQ(AssertLevel::PEMPEK_ASSERT_LEVEL_DEBUG, _level);
+    EXPECT_EQ(AssertLevel::Debug, _level);
     EXPECT_STREQ(static_cast<const char*>(PEMPEK_ASSERT_NULLPTR), _message);
 
     PEMPEK_ASSERT(false, "always false, always fails");
     EXPECT_STREQ("pempek_assert_test.cpp", _file);
     EXPECT_EQ(PEMPEK_ASSERT_LINE - 2, _line);
-    EXPECT_EQ(AssertLevel::PEMPEK_ASSERT_LEVEL_DEBUG, _level);
+    EXPECT_EQ(AssertLevel::Debug, _level);
     EXPECT_STREQ("always false, always fails", _message);
 
     const char* s = "foo";
@@ -144,7 +144,7 @@ namespace {
     PEMPEK_ASSERT_DEBUG(false, "always false, always fails -- s: %s, i: %d, f: %3.3f", s, i, f);
     EXPECT_STREQ("pempek_assert_test.cpp", _file);
     EXPECT_EQ(PEMPEK_ASSERT_LINE - 2, _line);
-    EXPECT_EQ(AssertLevel::PEMPEK_ASSERT_LEVEL_DEBUG, _level);
+    EXPECT_EQ(AssertLevel::Debug, _level);
     EXPECT_STREQ("always false, always fails -- s: foo, i: 123, f: 123.456", _message);
   }
 
@@ -156,13 +156,13 @@ namespace {
     PEMPEK_ASSERT_DEBUG(false);
     EXPECT_STREQ("pempek_assert_test.cpp", _file);
     EXPECT_EQ(PEMPEK_ASSERT_LINE - 2, _line);
-    EXPECT_EQ(AssertLevel::PEMPEK_ASSERT_LEVEL_DEBUG, _level);
+    EXPECT_EQ(AssertLevel::Debug, _level);
     EXPECT_STREQ(static_cast<const char*>(PEMPEK_ASSERT_NULLPTR), _message);
 
     PEMPEK_ASSERT_DEBUG(false, "always false, always fails");
     EXPECT_STREQ("pempek_assert_test.cpp", _file);
     EXPECT_EQ(PEMPEK_ASSERT_LINE - 2, _line);
-    EXPECT_EQ(AssertLevel::PEMPEK_ASSERT_LEVEL_DEBUG, _level);
+    EXPECT_EQ(AssertLevel::Debug, _level);
     EXPECT_STREQ("always false, always fails", _message);
 
     const char* s = "foo";
@@ -171,7 +171,7 @@ namespace {
     PEMPEK_ASSERT_DEBUG(false, "always false, always fails -- s: %s, i: %d, f: %3.3f", s, i, f);
     EXPECT_STREQ("pempek_assert_test.cpp", _file);
     EXPECT_EQ(PEMPEK_ASSERT_LINE - 2, _line);
-    EXPECT_EQ(AssertLevel::PEMPEK_ASSERT_LEVEL_DEBUG, _level);
+    EXPECT_EQ(AssertLevel::Debug, _level);
     EXPECT_STREQ("always false, always fails -- s: foo, i: 123, f: 123.456", _message);
   }
 
@@ -184,13 +184,13 @@ namespace {
     PEMPEK_ASSERT_ERROR(false);
     EXPECT_STREQ("pempek_assert_test.cpp", _file);
     EXPECT_EQ(PEMPEK_ASSERT_LINE - 2, _line);
-    EXPECT_EQ(AssertLevel::PEMPEK_ASSERT_LEVEL_ERROR, _level);
+    EXPECT_EQ(AssertLevel::Error, _level);
     EXPECT_STREQ(static_cast<const char*>(PEMPEK_ASSERT_NULLPTR), _message);
 #else
     EXPECT_THROW(PEMPEK_ASSERT_ERROR(false), AssertionException);
     EXPECT_STREQ("pempek_assert_test.cpp", _file);
     EXPECT_EQ(PEMPEK_ASSERT_LINE - 2, _line);
-    EXPECT_EQ(AssertLevel::PEMPEK_ASSERT_LEVEL_ERROR, _level);
+    EXPECT_EQ(AssertLevel::Error, _level);
     EXPECT_STREQ(static_cast<const char*>(PEMPEK_ASSERT_NULLPTR), _message);
 #endif
 
@@ -198,13 +198,13 @@ namespace {
     PEMPEK_ASSERT_ERROR(false, "always false, always fails");
     EXPECT_STREQ("pempek_assert_test.cpp", _file);
     EXPECT_EQ(PEMPEK_ASSERT_LINE - 2, _line);
-    EXPECT_EQ(AssertLevel::PEMPEK_ASSERT_LEVEL_ERROR, _level);
+    EXPECT_EQ(AssertLevel::Error, _level);
     EXPECT_STREQ("always false, always fails", _message);
 #else
     EXPECT_THROW(PEMPEK_ASSERT_ERROR(false, "always false, always fails"), AssertionException);
     EXPECT_STREQ("pempek_assert_test.cpp", _file);
     EXPECT_EQ(PEMPEK_ASSERT_LINE - 2, _line);
-    EXPECT_EQ(AssertLevel::PEMPEK_ASSERT_LEVEL_ERROR, _level);
+    EXPECT_EQ(AssertLevel::Error, _level);
     EXPECT_STREQ("always false, always fails", _message);
 #endif
 
@@ -215,13 +215,13 @@ namespace {
     PEMPEK_ASSERT_ERROR(false, "always false, always fails -- s: %s, i: %d, f: %3.3f", s, i, f);
     EXPECT_STREQ("pempek_assert_test.cpp", _file);
     EXPECT_EQ(PEMPEK_ASSERT_LINE - 2, _line);
-    EXPECT_EQ(AssertLevel::PEMPEK_ASSERT_LEVEL_ERROR, _level);
+    EXPECT_EQ(AssertLevel::Error, _level);
     EXPECT_STREQ("always false, always fails -- s: foo, i: 123, f: 123.456", _message);
 #else
     EXPECT_THROW(PEMPEK_ASSERT_ERROR(false, "always false, always fails -- s: %s, i: %d, f: %3.3f", s, i, f), AssertionException);
     EXPECT_STREQ("pempek_assert_test.cpp", _file);
     EXPECT_EQ(PEMPEK_ASSERT_LINE - 2, _line);
-    EXPECT_EQ(AssertLevel::PEMPEK_ASSERT_LEVEL_ERROR, _level);
+    EXPECT_EQ(AssertLevel::Error, _level);
     EXPECT_STREQ("always false, always fails -- s: foo, i: 123, f: 123.456", _message);
 #endif
   }
@@ -234,13 +234,13 @@ namespace {
     PEMPEK_ASSERT_FATAL(false);
     EXPECT_STREQ("pempek_assert_test.cpp", _file);
     EXPECT_EQ(PEMPEK_ASSERT_LINE - 2, _line);
-    EXPECT_EQ(AssertLevel::PEMPEK_ASSERT_LEVEL_FATAL, _level);
+    EXPECT_EQ(AssertLevel::Fatal, _level);
     EXPECT_STREQ(static_cast<const char*>(PEMPEK_ASSERT_NULLPTR), _message);
 
     PEMPEK_ASSERT_FATAL(false, "always false, always fails");
     EXPECT_STREQ("pempek_assert_test.cpp", _file);
     EXPECT_EQ(PEMPEK_ASSERT_LINE - 2, _line);
-    EXPECT_EQ(AssertLevel::PEMPEK_ASSERT_LEVEL_FATAL, _level);
+    EXPECT_EQ(AssertLevel::Fatal, _level);
     EXPECT_STREQ("always false, always fails", _message);
 
     const char* s = "foo";
@@ -249,7 +249,7 @@ namespace {
     PEMPEK_ASSERT_FATAL(false, "always false, always fails -- s: %s, i: %d, f: %3.3f", s, i, f);
     EXPECT_STREQ("pempek_assert_test.cpp", _file);
     EXPECT_EQ(PEMPEK_ASSERT_LINE - 2, _line);
-    EXPECT_EQ(AssertLevel::PEMPEK_ASSERT_LEVEL_FATAL, _level);
+    EXPECT_EQ(AssertLevel::Fatal, _level);
     EXPECT_STREQ("always false, always fails -- s: foo, i: 123, f: 123.456", _message);
 
     implementation::setAssertHandler(PEMPEK_ASSERT_NULLPTR);
@@ -296,7 +296,7 @@ namespace {
       }
     };
 
-    _action = AssertAction::PEMPEK_ASSERT_ACTION_IGNORE_LINE;
+    _action = AssertAction::IgnoreLine;
 
     Local::f();
     EXPECT_EQ(PEMPEK_ASSERT_LINE - 7, _line);
@@ -316,7 +316,7 @@ namespace {
       }
     };
 
-    _action = AssertAction::PEMPEK_ASSERT_ACTION_IGNORE_ALL;
+    _action = AssertAction::IgnoreAll;
 
     PEMPEK_ASSERT(false);
     EXPECT_EQ(PEMPEK_ASSERT_LINE - 1, _line);
@@ -378,7 +378,7 @@ namespace {
     {
       testBoolUsed();
     }
-    EXPECT_EQ(_level, AssertLevel::PEMPEK_ASSERT_LEVEL_DEBUG);
+    EXPECT_EQ(_level, AssertLevel::Debug);
     EXPECT_STREQ(_message, "unused value");
 
     {
@@ -389,7 +389,7 @@ namespace {
     {
       testBoolUsedFatal();
     }
-    EXPECT_EQ(_level, AssertLevel::PEMPEK_ASSERT_LEVEL_FATAL);
+    EXPECT_EQ(_level, AssertLevel::Fatal);
     EXPECT_STREQ(_message, "unused value");
 
 #if defined(_MSC_VER)
@@ -406,7 +406,7 @@ namespace {
     {
       testStructUsed();
     }
-    EXPECT_EQ(_level, AssertLevel::PEMPEK_ASSERT_LEVEL_DEBUG);
+    EXPECT_EQ(_level, AssertLevel::Debug);
     EXPECT_STREQ(_message, "unused value");
 
     {
@@ -417,7 +417,7 @@ namespace {
     {
       testStructUsedFatal();
     }
-    EXPECT_EQ(_level, AssertLevel::PEMPEK_ASSERT_LEVEL_FATAL);
+    EXPECT_EQ(_level, AssertLevel::Fatal);
     EXPECT_STREQ(_message, "unused value");
 
 #if defined(_MSC_VER)

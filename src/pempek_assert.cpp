@@ -109,13 +109,13 @@ namespace {
 #if defined(__ANDROID__) || defined(ANDROID)
     int priority = ANDROID_LOG_VERBOSE;
 
-    if (level >= AssertLevel::PEMPEK_ASSERT_LEVEL_DEBUG)
+    if (level >= AssertLevel::Debug)
       priority = ANDROID_LOG_DEBUG;
-    else if (level >= AssertLevel::PEMPEK_ASSERT_LEVEL_WARNING)
+    else if (level >= AssertLevel::Warning)
       priority = ANDROID_LOG_WARN;
-    else if (level >= AssertLevel::PEMPEK_ASSERT_LEVEL_ERROR)
+    else if (level >= AssertLevel::Error)
       priority = ANDROID_LOG_ERROR;
-    else if (level >= AssertLevel::PEMPEK_ASSERT_LEVEL_FATAL)
+    else if (level >= AssertLevel::Fatal)
       priority = ANDROID_LOG_FATAL;
 
     va_start(args, format);
@@ -134,16 +134,16 @@ namespace {
 
     switch (level)
     {
-      case AssertLevel::PEMPEK_ASSERT_LEVEL_DEBUG:
+      case AssertLevel::Debug:
         levelstr = "DEBUG";
         break;
-      case AssertLevel::PEMPEK_ASSERT_LEVEL_WARNING:
+      case AssertLevel::Warning:
         levelstr = "WARNING";
         break;
-      case AssertLevel::PEMPEK_ASSERT_LEVEL_ERROR:
+      case AssertLevel::Error:
         levelstr = "ERROR";
         break;
-      case AssertLevel::PEMPEK_ASSERT_LEVEL_FATAL:
+      case AssertLevel::Fatal:
         levelstr = "FATAL";
         break;
 
@@ -184,11 +184,11 @@ namespace {
     if (message)
       print(stderr, level, "  with message: %s\n\n", message);
 
-    if (level < AssertLevel::PEMPEK_ASSERT_LEVEL_DEBUG)
+    if (level < AssertLevel::Debug)
     {
-      return AssertAction::PEMPEK_ASSERT_ACTION_NONE;
+      return AssertAction::None;
     }
-    else if (AssertLevel::PEMPEK_ASSERT_LEVEL_DEBUG <= level && level < AssertLevel::PEMPEK_ASSERT_LEVEL_ERROR)
+    else if (AssertLevel::Debug <= level && level < AssertLevel::Error)
     {
 #if (!TARGET_OS_IPHONE && !TARGET_IPHONE_SIMULATOR) && (!defined(__ANDROID__) && !defined(ANDROID)) || defined(PEMPEK_ASSERT_DEFAULT_HANDLER_STDIN)
       for (;;)
@@ -214,38 +214,38 @@ namespace {
         {
           case 'b':
           case 'B':
-            return AssertAction::PEMPEK_ASSERT_ACTION_ABORT;
+            return AssertAction::Abort;
 
           case 'd':
           case 'D':
-            return AssertAction::PEMPEK_ASSERT_ACTION_BREAK;
+            return AssertAction::Break;
 
           case 'i':
           case 'I':
-            return AssertAction::PEMPEK_ASSERT_ACTION_IGNORE;
+            return AssertAction::Ignore;
 
           case 'f':
           case 'F':
-            return AssertAction::PEMPEK_ASSERT_ACTION_IGNORE_LINE;
+            return AssertAction::IgnoreLine;
 
           case 'a':
           case 'A':
-            return AssertAction::PEMPEK_ASSERT_ACTION_IGNORE_ALL;
+            return AssertAction::IgnoreAll;
 
           default:
             break;
         }
       }
 #else
-      return AssertAction::PEMPEK_ASSERT_ACTION_BREAK;
+      return AssertAction::Break;
 #endif
     }
-    else if (AssertLevel::PEMPEK_ASSERT_LEVEL_ERROR <= level && level < AssertLevel::PEMPEK_ASSERT_LEVEL_FATAL)
+    else if (AssertLevel::Error <= level && level < AssertLevel::Fatal)
     {
-      return AssertAction::PEMPEK_ASSERT_ACTION_THROW;
+      return AssertAction::Throw;
     }
 
-    return AssertAction::PEMPEK_ASSERT_ACTION_ABORT;
+    return AssertAction::Abort;
   }
 
   void _throw(const char* file,
@@ -458,29 +458,29 @@ namespace implementation {
 
     switch (action)
     {
-      case AssertAction::PEMPEK_ASSERT_ACTION_ABORT:
+      case AssertAction::Abort:
         PEMPEK_ASSERT_ABORT();
 
-      case AssertAction::PEMPEK_ASSERT_ACTION_IGNORE_LINE:
+      case AssertAction::IgnoreLine:
         ignoreLine = true;
         break;
 
-      case AssertAction::PEMPEK_ASSERT_ACTION_IGNORE_ALL:
+      case AssertAction::IgnoreAll:
         ignoreAllAsserts(true);
         break;
 
-      case AssertAction::PEMPEK_ASSERT_ACTION_THROW:
+      case AssertAction::Throw:
         _throw(file, line, function, expression, message);
         break;
 
-      case AssertAction::PEMPEK_ASSERT_ACTION_IGNORE:
-      case AssertAction::PEMPEK_ASSERT_ACTION_BREAK:
-      case AssertAction::PEMPEK_ASSERT_ACTION_NONE:
+      case AssertAction::Ignore:
+      case AssertAction::Break:
+      case AssertAction::None:
       default:
         return action;
     }
 
-    return AssertAction::PEMPEK_ASSERT_ACTION_NONE;
+    return AssertAction::None;
   }
 
 } // namespace implementation
