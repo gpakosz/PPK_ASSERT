@@ -211,6 +211,20 @@ make it work with Visual Studio 2013 Express. Wrapping `PEMPEK_ASSERT_USED`
 around a return type is a cheap way to debug a program where you suspect a
 function return value is being ignored and shouldn't have been.
 
+### Compile-time assertions
+
+    PEMPEK_STATIC_ASSERT(expression)
+    PEMPEK_STATIC_ASSERT(expression, message)
+
+In case of compile-time assertions, the message must be a string literal and
+can't be formated like with run-time assertions, e.g:
+
+    PEMPEK_STATIC_ASSERT(sizeof(foo) > sizeof(bar), "size mismatch");
+
+When compiled with a C++11 capable compiler, `PEMPEK_STATIC_ASSERT` defers to
+`static_assert`. Contrary to `static_assert`, it's possible to use
+`PEMPEK_STATIC_ASSERT` without a message.
+
 ## Customizing compilation
 
 In order to use `PEMPEK_ASSERT` in your own project, you just have to bring in

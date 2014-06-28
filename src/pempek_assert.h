@@ -4,35 +4,42 @@
 // -- usage --------------------------------------------------------------------
 /*
 
-  PEMPEK_ASSERT(expression);
-  PEMPEK_ASSERT(expression, message, ...);
+  run-time assertions:
 
-  PEMPEK_ASSERT_WARNING(expression);
-  PEMPEK_ASSERT_WARNING(expression, message, ...);
+    PEMPEK_ASSERT(expression);
+    PEMPEK_ASSERT(expression, message, ...);
 
-  PEMPEK_ASSERT_DEBUG(expression);
-  PEMPEK_ASSERT_DEBUG(expression, message, ...);
+    PEMPEK_ASSERT_WARNING(expression);
+    PEMPEK_ASSERT_WARNING(expression, message, ...);
 
-  PEMPEK_ASSERT_ERROR(expression);
-  PEMPEK_ASSERT_ERROR(expression, message);
+    PEMPEK_ASSERT_DEBUG(expression);
+    PEMPEK_ASSERT_DEBUG(expression, message, ...);
 
-  PEMPEK_ASSERT_FATAL(expression);
-  PEMPEK_ASSERT_FATAL(expression, message, ...);
+    PEMPEK_ASSERT_ERROR(expression);
+    PEMPEK_ASSERT_ERROR(expression, message);
 
-  PEMPEK_ASSERT_CUSTOM(level, expression);
-  PEMPEK_ASSERT_CUSTOM(level, expression, message, ...);
+    PEMPEK_ASSERT_FATAL(expression);
+    PEMPEK_ASSERT_FATAL(expression, message, ...);
 
-  PEMPEK_ASSERT_USED(type)
-  PEMPEK_ASSERT_USED_WARNING(type)
-  PEMPEK_ASSERT_USED_DEBUG(type)
-  PEMPEK_ASSERT_USED_ERROR(type)
-  PEMPEK_ASSERT_USED_FATAL(type)
-  PEMPEK_ASSERT_USED_CUSTOM(level, type)
+    PEMPEK_ASSERT_CUSTOM(level, expression);
+    PEMPEK_ASSERT_CUSTOM(level, expression, message, ...);
 
-  PEMPEK_ASSERT_USED(bool) foo()
-  {
-    return true;
-  }
+    PEMPEK_ASSERT_USED(type)
+    PEMPEK_ASSERT_USED_WARNING(type)
+    PEMPEK_ASSERT_USED_DEBUG(type)
+    PEMPEK_ASSERT_USED_ERROR(type)
+    PEMPEK_ASSERT_USED_FATAL(type)
+    PEMPEK_ASSERT_USED_CUSTOM(level, type)
+
+    PEMPEK_ASSERT_USED(bool) foo()
+    {
+      return true;
+    }
+
+  compile-time assertions:
+
+    PEMPEK_STATIC_ASSERT(expression)
+    PEMPEK_STATIC_ASSERT(expression, message)
 
 */
 
@@ -183,10 +190,14 @@
 #define PEMPEK_ASSERT_USED_(...)            PEMPEK_ASSERT_USED_0(PEMPEK_ASSERT_NARG(__VA_ARGS__), __VA_ARGS__)
 #define PEMPEK_ASSERT_USED_0(N, ...)        PEMPEK_ASSERT_CONCATENATE(PEMPEK_ASSERT_USED_, N)(__VA_ARGS__)
 
-#define PEMPEK_ASSERT_STATIC_ASSERT(expression, message)\
+#define PEMPEK_STATIC_ASSERT(...)           PEMPEK_ASSERT_APPLY_VA_ARGS(PEMPEK_ASSERT_CONCATENATE(PEMPEK_STATIC_ASSERT_, PEMPEK_ASSERT_HAS_ONE_ARG(__VA_ARGS__)), __VA_ARGS__)
+#if defined(PEMPEK_ASSERT_CXX11)
+#define PEMPEK_STATIC_ASSERT_0(expression, message) static_assert(expression, message)
+#else
+#define PEMPEK_STATIC_ASSERT_0(expression, message)\
   struct PEMPEK_ASSERT_CONCATENATE(__pempek_assert_static_assertion_at_line_, PEMPEK_ASSERT_LINE)\
   {\
-    pempek::assert::implementation::StaticAssertion<static_cast<bool>((expression))> PEMPEK_ASSERT_CONCATENATE(PEMPEK_ASSERT_CONCATENATE(PEMPEK_ASSERT_CONCATENATE(STATIC_ASSERTION_FAILED_AT_LINE_, PEMPEK_ASSERT_LINE), _), message);\
+    pempek::assert::implementation::StaticAssertion<static_cast<bool>((expression))> PEMPEK_ASSERT_CONCATENATE(STATIC_ASSERTION_FAILED_AT_LINE_, PEMPEK_ASSERT_LINE);\
   };\
   typedef pempek::assert::implementation::StaticAssertionTest<sizeof(PEMPEK_ASSERT_CONCATENATE(__pempek_assert_static_assertion_at_line_, PEMPEK_ASSERT_LINE))> PEMPEK_ASSERT_CONCATENATE(__pempek_assert_static_assertion_test_at_line_, PEMPEK_ASSERT_LINE)
 
@@ -194,7 +205,10 @@
 // messages about unused variables when static assertions are used at function
 // scope
 // the use of sizeof makes sure the assertion error is not ignored by SFINAE
+#endif
+#define PEMPEK_STATIC_ASSERT_1(expression)  PEMPEK_STATIC_ASSERT_0(expression, #expression)
 
+#if !defined (PEMPEK_ASSERT_CXX11)
 namespace pempek {
 namespace assert {
 namespace implementation {
@@ -215,6 +229,7 @@ namespace implementation {
 } // namespace implementation
 } // namespace assert
 } // namespace pempek
+#endif
 
 #if !defined(PEMPEK_ASSERT_DISABLE_STL)
 #  if defined(_MSC_VER)
@@ -289,7 +304,7 @@ namespace assert {
       char* _heap;
     };
 
-    PEMPEK_ASSERT_STATIC_ASSERT(size > sizeof(char*), invalid_size);
+    PEMPEK_STATIC_ASSERT(size > sizeof(char*), "invalid_size");
   }; // AssertionException
 
   PEMPEK_ASSERT_ALWAYS_INLINE const char* AssertionException::file() const
