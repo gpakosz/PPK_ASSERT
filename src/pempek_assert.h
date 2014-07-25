@@ -73,9 +73,9 @@
 #define PEMPEK_ASSERT_USED_CUSTOM(level, ...) PEMPEK_ASSERT_USED_(level, __VA_ARGS__)
 
 
-#define PEMPEK_ASSERT_CONCATENATE(lhs, rhs)   PEMPEK_ASSERT_CONCATENATE_(lhs, rhs)
-#define PEMPEK_ASSERT_CONCATENATE_(lhs, rhs)  PEMPEK_ASSERT_CONCATENATE__(lhs, rhs)
-#define PEMPEK_ASSERT_CONCATENATE__(lhs, rhs) lhs##rhs
+#define PEMPEK_ASSERT_JOIN(lhs, rhs)   PEMPEK_ASSERT_JOIN_(lhs, rhs)
+#define PEMPEK_ASSERT_JOIN_(lhs, rhs)  PEMPEK_ASSERT_JOIN__(lhs, rhs)
+#define PEMPEK_ASSERT_JOIN__(lhs, rhs) lhs##rhs
 
 #define PEMPEK_ASSERT_FILE __FILE__
 #define PEMPEK_ASSERT_LINE __LINE__
@@ -148,7 +148,7 @@
 #  define PEMPEK_ASSERT_NULLPTR 0
 #endif
 
-#define PEMPEK_ASSERT_(level, ...)          PEMPEK_ASSERT_CONCATENATE(PEMPEK_ASSERT_, PEMPEK_ASSERT_HAS_ONE_ARG(__VA_ARGS__))(level, __VA_ARGS__)
+#define PEMPEK_ASSERT_(level, ...)          PEMPEK_ASSERT_JOIN(PEMPEK_ASSERT_, PEMPEK_ASSERT_HAS_ONE_ARG(__VA_ARGS__))(level, __VA_ARGS__)
 #define PEMPEK_ASSERT_0(level, ...)         PEMPEK_ASSERT_APPLY_VA_ARGS(PEMPEK_ASSERT_2, level, __VA_ARGS__)
 #define PEMPEK_ASSERT_1(level, expression)  PEMPEK_ASSERT_2(level, expression, PEMPEK_ASSERT_NULLPTR)
 
@@ -188,18 +188,18 @@
 #  endif
 
 #define PEMPEK_ASSERT_USED_(...)            PEMPEK_ASSERT_USED_0(PEMPEK_ASSERT_NARG(__VA_ARGS__), __VA_ARGS__)
-#define PEMPEK_ASSERT_USED_0(N, ...)        PEMPEK_ASSERT_CONCATENATE(PEMPEK_ASSERT_USED_, N)(__VA_ARGS__)
+#define PEMPEK_ASSERT_USED_0(N, ...)        PEMPEK_ASSERT_JOIN(PEMPEK_ASSERT_USED_, N)(__VA_ARGS__)
 
-#define PEMPEK_STATIC_ASSERT(...)           PEMPEK_ASSERT_APPLY_VA_ARGS(PEMPEK_ASSERT_CONCATENATE(PEMPEK_STATIC_ASSERT_, PEMPEK_ASSERT_HAS_ONE_ARG(__VA_ARGS__)), __VA_ARGS__)
+#define PEMPEK_STATIC_ASSERT(...)           PEMPEK_ASSERT_APPLY_VA_ARGS(PEMPEK_ASSERT_JOIN(PEMPEK_STATIC_ASSERT_, PEMPEK_ASSERT_HAS_ONE_ARG(__VA_ARGS__)), __VA_ARGS__)
 #if defined(PEMPEK_ASSERT_CXX11)
 #define PEMPEK_STATIC_ASSERT_0(expression, message) static_assert(expression, message)
 #else
 #define PEMPEK_STATIC_ASSERT_0(expression, message)\
-  struct PEMPEK_ASSERT_CONCATENATE(__pempek_assert_static_assertion_at_line_, PEMPEK_ASSERT_LINE)\
+  struct PEMPEK_ASSERT_JOIN(__pempek_assert_static_assertion_at_line_, PEMPEK_ASSERT_LINE)\
   {\
-    pempek::assert::implementation::StaticAssertion<static_cast<bool>((expression))> PEMPEK_ASSERT_CONCATENATE(STATIC_ASSERTION_FAILED_AT_LINE_, PEMPEK_ASSERT_LINE);\
+    pempek::assert::implementation::StaticAssertion<static_cast<bool>((expression))> PEMPEK_ASSERT_JOIN(STATIC_ASSERTION_FAILED_AT_LINE_, PEMPEK_ASSERT_LINE);\
   };\
-  typedef pempek::assert::implementation::StaticAssertionTest<sizeof(PEMPEK_ASSERT_CONCATENATE(__pempek_assert_static_assertion_at_line_, PEMPEK_ASSERT_LINE))> PEMPEK_ASSERT_CONCATENATE(__pempek_assert_static_assertion_test_at_line_, PEMPEK_ASSERT_LINE)
+  typedef pempek::assert::implementation::StaticAssertionTest<sizeof(PEMPEK_ASSERT_JOIN(__pempek_assert_static_assertion_at_line_, PEMPEK_ASSERT_LINE))> PEMPEK_ASSERT_JOIN(__pempek_assert_static_assertion_test_at_line_, PEMPEK_ASSERT_LINE)
 
 // note that we wrap the non existing type inside a struct to avoid warning
 // messages about unused variables when static assertions are used at function
