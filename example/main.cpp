@@ -59,7 +59,6 @@ ASSERT_USED(int) trigger_assert_unused_return_value2()
 #include <pempek_assert.h>
 
 #if defined(_WIN32)
-#define VC_EXTRALEAN
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 int CALLBACK WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)

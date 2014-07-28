@@ -2,7 +2,6 @@
 // (‑●‑●)> released under the WTFPL v2 license, by Gregory Pakosz (@gpakosz)
 
 #if defined(_WIN32)
-#define VC_EXTRALEAN
 #define WIN32_LEAN_AND_MEAN
 #define _CRT_SECURE_NO_WARNINGS
 #include <windows.h>
