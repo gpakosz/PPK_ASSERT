@@ -32,6 +32,11 @@
 
 Now which do you prefer? I know which I prefer.
 
+Just drop `pempek_assert.h` and `pempek_assert.cpp` into your build and get
+started. (see also [customizing compilation])
+
+[customizing compilation]: #customizing-compilation
+
 ## Why?
 
 It all started with the need to provide a meaningful message when assertions
