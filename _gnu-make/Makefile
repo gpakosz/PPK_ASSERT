@@ -30,7 +30,7 @@ buildir := $(realpath .)/build
 binsubdir := $(platform)-$(architecture)
 bindir := $(prefix)/bin/$(binsubdir)
 
-CPPFLAGS := -DPEMPEK_ASSERT_LOG_FILE=\"assert.txt\" -DPEMPEK_ASSERT_LOG_FILE_TRUNCATE
+CPPFLAGS := -DPPK_ASSERT_LOG_FILE=\"assert.txt\" -DPPK_ASSERT_LOG_FILE_TRUNCATE
 CXXFLAGS := -O2 -g
 
 ifeq ($(platform),linux)
@@ -48,12 +48,12 @@ $(bindir)/test: $(srcdir)/pempek_assert.cpp $(srcdir)/pempek_assert.h $(testdir)
 
 $(bindir)/test-no-stl: $(srcdir)/pempek_assert.cpp $(srcdir)/pempek_assert.h $(testdir)/pempek_assert_test.cpp $(testdir)/gtest/gtest-all.cc $(testdir)/gtest/gtest.h
 	mkdir -p $(@D)
-	$(CXX) -o $@ -I $(srcdir) -I$(testdir) $(CPPFLAGS) -DPEMPEK_ASSERT_DISABLE_STL $(CXXFLAGS) $(GTEST_CXXFLAGS) $(LDFLAGS) $(filter-out %.h,$^)
+	$(CXX) -o $@ -I $(srcdir) -I$(testdir) $(CPPFLAGS) -DPPK_ASSERT_DISABLE_STL $(CXXFLAGS) $(GTEST_CXXFLAGS) $(LDFLAGS) $(filter-out %.h,$^)
 	$(if $(postbuild),$(postbuild) $@)
 
 $(bindir)/test-no-exceptions: $(srcdir)/pempek_assert.cpp $(srcdir)/pempek_assert.h $(testdir)/pempek_assert_test.cpp $(testdir)/gtest/gtest-all.cc $(testdir)/gtest/gtest.h
 	mkdir -p $(@D)
-	$(CXX) -o $@ -I $(srcdir) -I$(testdir) $(CPPFLAGS) -DPEMPEK_ASSERT_DISABLE_EXCEPTIONS $(CXXFLAGS) $(GTEST_CXXFLAGS) $(LDFLAGS) $(filter-out %.h,$^)
+	$(CXX) -o $@ -I $(srcdir) -I$(testdir) $(CPPFLAGS) -DPPK_ASSERT_DISABLE_EXCEPTIONS $(CXXFLAGS) $(GTEST_CXXFLAGS) $(LDFLAGS) $(filter-out %.h,$^)
 	$(if $(postbuild),$(postbuild) $@)
 
 .PHONY: build-example

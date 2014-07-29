@@ -20,33 +20,33 @@
 
 #if defined(__ANDROID__) || defined(ANDROID)
 #include <android/log.h>
-#if !defined(PEMPEK_ASSERT_LOG_TAG)
-#define PEMPEK_ASSERT_LOG_TAG "PEMPEK_ASSERT"
+#if !defined(PPK_ASSERT_LOG_TAG)
+#define PPK_ASSERT_LOG_TAG "PPK_ASSERT"
 #endif
 #endif
 
-//#define PEMPEK_ASSERT_LOG_FILE "/tmp/assert.txt"
-//#define PEMPEK_ASSERT_LOG_FILE_TRUNCATE
+//#define PPK_ASSERT_LOG_FILE "/tmp/assert.txt"
+//#define PPK_ASSERT_LOG_FILE_TRUNCATE
 
 // malloc and free are only used by AssertionException implemented in terms of
 // short string optimization.
 // However, no memory allocation happens if
-// PEMPEK_ASSERT_EXCEPTION_MESSAGE_BUFFER_SIZE == PEMPEK_ASSERT_MESSAGE_BUFFER_SIZE
+// PPK_ASSERT_EXCEPTION_MESSAGE_BUFFER_SIZE == PPK_ASSERT_MESSAGE_BUFFER_SIZE
 // which is the default.
-#if !defined(PEMPEK_ASSERT_MALLOC)
-#define PEMPEK_ASSERT_MALLOC(size) malloc(size)
+#if !defined(PPK_ASSERT_MALLOC)
+#define PPK_ASSERT_MALLOC(size) malloc(size)
 #endif
 
-#if !defined(PEMPEK_ASSERT_FREE)
-#define PEMPEK_ASSERT_FREE(p) free(p)
+#if !defined(PPK_ASSERT_FREE)
+#define PPK_ASSERT_FREE(p) free(p)
 #endif
 
-#if !defined(PEMPEK_ASSERT_MESSAGE_BUFFER_SIZE)
-#  define PEMPEK_ASSERT_MESSAGE_BUFFER_SIZE PEMPEK_ASSERT_EXCEPTION_MESSAGE_BUFFER_SIZE
+#if !defined(PPK_ASSERT_MESSAGE_BUFFER_SIZE)
+#  define PPK_ASSERT_MESSAGE_BUFFER_SIZE PPK_ASSERT_EXCEPTION_MESSAGE_BUFFER_SIZE
 #endif
 
-#if !defined(PEMPEK_ASSERT_ABORT)
-#define PEMPEK_ASSERT_ABORT abort
+#if !defined(PPK_ASSERT_ABORT)
+#define PPK_ASSERT_ABORT abort
 #endif
 
 namespace {
@@ -56,12 +56,12 @@ namespace {
 
   typedef int (*printHandler)(FILE* out, int, const char* format, ...);
 
-#if defined(PEMPEK_ASSERT_LOG_FILE) && defined(PEMPEK_ASSERT_LOG_FILE_TRUNCATE)
+#if defined(PPK_ASSERT_LOG_FILE) && defined(PPK_ASSERT_LOG_FILE_TRUNCATE)
   struct LogFileTruncate
   {
     LogFileTruncate()
     {
-      if (FILE* f = fopen(PEMPEK_ASSERT_LOG_FILE, "w"))
+      if (FILE* f = fopen(PPK_ASSERT_LOG_FILE, "w"))
         fclose(f);
     }
   };
@@ -79,12 +79,12 @@ namespace {
     fflush(out);
     va_end(args);
 
-#if defined(PEMPEK_ASSERT_LOG_FILE)
+#if defined(PPK_ASSERT_LOG_FILE)
     struct Local
     {
       static void log(const char* format, va_list args)
       {
-        if (FILE* f = fopen(PEMPEK_ASSERT_LOG_FILE, "a"))
+        if (FILE* f = fopen(PPK_ASSERT_LOG_FILE, "a"))
         {
           vfprintf(f, format, args);
           fclose(f);
@@ -98,9 +98,9 @@ namespace {
 #endif
 
 #if defined(_WIN32)
-    char buffer[PEMPEK_ASSERT_MESSAGE_BUFFER_SIZE];
+    char buffer[PPK_ASSERT_MESSAGE_BUFFER_SIZE];
     va_start(args, format);
-    vsnprintf(buffer, PEMPEK_ASSERT_MESSAGE_BUFFER_SIZE, format, args);
+    vsnprintf(buffer, PPK_ASSERT_MESSAGE_BUFFER_SIZE, format, args);
     ::OutputDebugStringA(buffer);
     va_end(args);
 #endif
@@ -118,10 +118,10 @@ namespace {
       priority = ANDROID_LOG_FATAL;
 
     va_start(args, format);
-    __android_log_vprint(priority, PEMPEK_ASSERT_LOG_TAG, format, args); 
+    __android_log_vprint(priority, PPK_ASSERT_LOG_TAG, format, args); 
     va_start(args, format);
 #else
-    PEMPEK_ASSERT_UNUSED(level);
+    PPK_ASSERT_UNUSED(level);
 #endif
 
     return count;
@@ -189,7 +189,7 @@ namespace {
     }
     else if (AssertLevel::Debug <= level && level < AssertLevel::Error)
     {
-#if (!TARGET_OS_IPHONE && !TARGET_IPHONE_SIMULATOR) && (!defined(__ANDROID__) && !defined(ANDROID)) || defined(PEMPEK_ASSERT_DEFAULT_HANDLER_STDIN)
+#if (!TARGET_OS_IPHONE && !TARGET_IPHONE_SIMULATOR) && (!defined(__ANDROID__) && !defined(ANDROID)) || defined(PPK_ASSERT_DEFAULT_HANDLER_STDIN)
       for (;;)
       {
         fprintf(stderr, "Press (I)gnore / Ignore (F)orever / Ignore (A)ll / (D)ebug / A(b)ort: ");
@@ -266,7 +266,7 @@ namespace assert {
                                          const char* function,
                                          const char* expression,
                                          const char* message)
-  : _file(file), _line(line), _function(function), _expression(expression), _heap(PEMPEK_ASSERT_NULLPTR)
+  : _file(file), _line(line), _function(function), _expression(expression), _heap(PPK_ASSERT_NULLPTR)
   {
     if (!message)
     {
@@ -283,7 +283,7 @@ namespace assert {
     }
     else // allocate storage on the heap
     {
-      _heap = static_cast<char*>(PEMPEK_ASSERT_MALLOC(sizeof(char) * (length + 1)));
+      _heap = static_cast<char*>(PPK_ASSERT_MALLOC(sizeof(char) * (length + 1)));
 
       if (!_heap) // allocation failed
       {
@@ -311,7 +311,7 @@ namespace assert {
     }
     else // allocate storage on the heap
     {
-      _heap = static_cast<char*>(PEMPEK_ASSERT_MALLOC(sizeof(char) * (length + 1)));
+      _heap = static_cast<char*>(PPK_ASSERT_MALLOC(sizeof(char) * (length + 1)));
 
       if (!_heap) // allocation failed
       {
@@ -327,12 +327,12 @@ namespace assert {
     }
   }
 
-  AssertionException::~AssertionException() PEMPEK_ASSERT_EXCEPTION_NO_THROW
+  AssertionException::~AssertionException() PPK_ASSERT_EXCEPTION_NO_THROW
   {
     if (_stack[size - 1])
-      PEMPEK_ASSERT_FREE(_heap);
+      PPK_ASSERT_FREE(_heap);
 
-    _heap = PEMPEK_ASSERT_NULLPTR; // in case the exception object is destroyed twice
+    _heap = PPK_ASSERT_NULLPTR; // in case the exception object is destroyed twice
     _stack[size - 1] = 0;
   }
 
@@ -347,7 +347,7 @@ namespace assert {
     if (length < size) // message is short enough for the stack buffer
     {
       if (_stack[size - 1])
-        PEMPEK_ASSERT_FREE(_heap);
+        PPK_ASSERT_FREE(_heap);
 
       strncpy(_stack, message, size);
     }
@@ -364,11 +364,11 @@ namespace assert {
         }
         else
         {
-          PEMPEK_ASSERT_FREE(_heap);
+          PPK_ASSERT_FREE(_heap);
         }
       }
 
-      _heap = static_cast<char*>(PEMPEK_ASSERT_MALLOC(sizeof(char) * (length + 1)));
+      _heap = static_cast<char*>(PPK_ASSERT_MALLOC(sizeof(char) * (length + 1)));
 
       if (!_heap) // allocation failed
       {
@@ -391,7 +391,7 @@ namespace assert {
     return *this;
   }
 
-  const char* AssertionException::what() const PEMPEK_ASSERT_EXCEPTION_NO_THROW
+  const char* AssertionException::what() const PPK_ASSERT_EXCEPTION_NO_THROW
   {
     return _stack[size - 1] ? _heap : _stack;
   }
@@ -433,14 +433,14 @@ namespace implementation {
                                           bool& ignoreLine,
                                           const char* message, ...)
   {
-    char message_[PEMPEK_ASSERT_MESSAGE_BUFFER_SIZE] = {0};
+    char message_[PPK_ASSERT_MESSAGE_BUFFER_SIZE] = {0};
     const char* file_;
 
     if (message)
     {
       va_list args;
       va_start(args, message);
-      vsnprintf(message_, PEMPEK_ASSERT_MESSAGE_BUFFER_SIZE, message, args);
+      vsnprintf(message_, PPK_ASSERT_MESSAGE_BUFFER_SIZE, message, args);
       va_end(args);
 
       message = message_;
@@ -458,7 +458,7 @@ namespace implementation {
     switch (action)
     {
       case AssertAction::Abort:
-        PEMPEK_ASSERT_ABORT();
+        PPK_ASSERT_ABORT();
 
       case AssertAction::IgnoreLine:
         ignoreLine = true;

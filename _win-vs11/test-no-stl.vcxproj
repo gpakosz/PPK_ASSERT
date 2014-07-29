@@ -97,28 +97,28 @@
     <ClCompile />
     <ClCompile />
     <ClCompile>
-      <PreprocessorDefinitions>PEMPEK_ASSERT_DISABLE_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PPK_ASSERT_DISABLE_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile />
     <ClCompile />
     <ClCompile>
-      <PreprocessorDefinitions>PEMPEK_ASSERT_DISABLE_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PPK_ASSERT_DISABLE_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile />
     <ClCompile />
     <ClCompile>
-      <PreprocessorDefinitions>PEMPEK_ASSERT_DISABLE_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PPK_ASSERT_DISABLE_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile />
     <ClCompile />
     <ClCompile>
-      <PreprocessorDefinitions>PEMPEK_ASSERT_DISABLE_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PPK_ASSERT_DISABLE_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

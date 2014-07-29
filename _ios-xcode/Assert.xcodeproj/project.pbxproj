@@ -304,7 +304,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					PEMPEK_ASSERT_DISABLE_STL,
+					PPK_ASSERT_DISABLE_STL,
 					"$(inherited)",
 				);
 				HEADER_SEARCH_PATHS = (
@@ -322,7 +322,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					PEMPEK_ASSERT_DISABLE_STL,
+					PPK_ASSERT_DISABLE_STL,
 					"$(inherited)",
 				);
 				HEADER_SEARCH_PATHS = (
@@ -340,7 +340,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					PEMPEK_ASSERT_DISABLE_STL,
+					PPK_ASSERT_DISABLE_STL,
 					"$(inherited)",
 				);
 				HEADER_SEARCH_PATHS = (
@@ -358,7 +358,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					PEMPEK_ASSERT_DISABLE_STL,
+					PPK_ASSERT_DISABLE_STL,
 					"$(inherited)",
 				);
 				HEADER_SEARCH_PATHS = (

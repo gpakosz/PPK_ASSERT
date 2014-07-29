@@ -25,7 +25,7 @@
       float min = 0.0f;
       float max = 1.0f;
       float v = 2.0f;
-      PEMPEK_ASSERT(v > min && v < max, "invalid value: %f, must be between %f and %f", v, min, max);
+      PPK_ASSERT(v > min && v < max, "invalid value: %f, must be between %f and %f", v, min, max);
 
       return 0;
     }
@@ -63,7 +63,7 @@ providing the following features:
 ## What?
 
 The library is designed to be lightweight would you decide to keep assertions
-enabled even in release builds (`#define PEMPEK_ASSERT_ENABLED 1`).
+enabled even in release builds (`#define PPK_ASSERT_ENABLED 1`).
 
 Each assertion eats up `sizeof(bool)` of stack, used to keep track whether the
 assertion should be ignored for the remaining lifetime of the program.
@@ -72,29 +72,29 @@ assertion should be ignored for the remaining lifetime of the program.
 
 The library provides `printf` like formatting:
 
-    PEMPEK_ASSERT(expression);
-    PEMPEK_ASSERT(expression, message, ...);
+    PPK_ASSERT(expression);
+    PPK_ASSERT(expression, message, ...);
 
 E.g:
 
-    PEMPEK_ASSERT(validate(v, min, max), "invalid value: %f, must be between %f and %f", v, min, max);
+    PPK_ASSERT(validate(v, min, max), "invalid value: %f, must be between %f and %f", v, min, max);
 
 ### Levels Of Severity
 
 This library defines different levels of severity:
 
-- `PEMPEK_ASSERT_WARNING`
+- `PPK_ASSERT_WARNING`
 - `PEKPEK_ASSERT_DEBUG`
-- `PEMPEK_ASSERT_ERROR`
-- `PEMPEK_ASSERT_FATAL`
+- `PPK_ASSERT_ERROR`
+- `PPK_ASSERT_FATAL`
 
-When you use `PEMPEK_ASSERT`, the severity level is determined by the
-`PEMPEK_ASSERT_DEFAULT_LEVEL` preprocessor token.
+When you use `PPK_ASSERT`, the severity level is determined by the
+`PPK_ASSERT_DEFAULT_LEVEL` preprocessor token.
 
 You can also add your own additional severity levels by using:
 
-    PEMPEK_ASSERT_CUSTOM(level, expression);
-    PEMPEK_ASSERT_CUSTOM(level, expression, message, ...);
+    PPK_ASSERT_CUSTOM(level, expression);
+    PPK_ASSERT_CUSTOM(level, expression, message, ...);
 
 ### Default Assertion Handler
 
@@ -109,7 +109,7 @@ levels:
 
 If you know you're going to launch your program from within a login shell
 session on iOS or Android (e.g. through SSH), define the
-`PEMPEK_ASSERT_DEFAULT_HANDLER_STDIN` preprocessor token.
+`PPK_ASSERT_DEFAULT_HANDLER_STDIN` preprocessor token.
 
 When prompting for user action, the default handler prints the following
 message on `stderr`:
@@ -136,9 +136,9 @@ in-kernel log buffer, which can later be accessed through the `logcat` utility.
 The default handler supports optional logging to a file (suggested by
 [@nothings]):
 
-- `#define PEMPEK_ASSERT_LOG_FILE "/tmp/assert.txt"`
+- `#define PPK_ASSERT_LOG_FILE "/tmp/assert.txt"`
 - to truncate the log file upon each program invocation, `#define
-  PEMPEK_ASSERT_LOG_FILE_TRUNCATE`
+  PPK_ASSERT_LOG_FILE_TRUNCATE`
 
 [@nothings]: https://twitter.com/nothings
 
@@ -158,13 +158,13 @@ following signature:
 Your handler will be called with the proper information filled and needs to
 return the action to be performed:
 
-    PEMPEK_ASSERT_ACTION_NONE,
-    PEMPEK_ASSERT_ACTION_ABORT,
-    PEMPEK_ASSERT_ACTION_BREAK,
-    PEMPEK_ASSERT_ACTION_IGNORE,
-    PEMPEK_ASSERT_ACTION_IGNORE_LINE,
-    PEMPEK_ASSERT_ACTION_IGNORE_ALL,
-    PEMPEK_ASSERT_ACTION_THROW
+    PPK_ASSERT_ACTION_NONE,
+    PPK_ASSERT_ACTION_ABORT,
+    PPK_ASSERT_ACTION_BREAK,
+    PPK_ASSERT_ACTION_IGNORE,
+    PPK_ASSERT_ACTION_IGNORE_LINE,
+    PPK_ASSERT_ACTION_IGNORE_ALL,
+    PPK_ASSERT_ACTION_THROW
 
 To install your custom handler, call:
 
@@ -172,10 +172,10 @@ To install your custom handler, call:
 
 ### Unused Return Values
 
-The library provides `PEMPEK_ASSERT_USED` that fires an assertion when an unused
+The library provides `PPK_ASSERT_USED` that fires an assertion when an unused
 return value reaches end of scope:
 
-    PEMPEK_ASSERT_USED(int) foo();
+    PPK_ASSERT_USED(int) foo();
 
 When calling `foo()`,
 
@@ -191,15 +191,15 @@ When calling `foo()`,
       baz();
     } <- assertion fires, caused by unused `foo()` return value reaching end of scope
 
-Just like `PEMPEK_ASSERT`, `PEMPEK_ASSERT_USED` uses
-`PEMPEK_ASSERT_DEFAULT_LEVEL`. If you want more control on the severity, use one
+Just like `PPK_ASSERT`, `PPK_ASSERT_USED` uses
+`PPK_ASSERT_DEFAULT_LEVEL`. If you want more control on the severity, use one
 of:
 
-    PEMPEK_ASSERT_USED_WARNING(type)
-    PEMPEK_ASSERT_USED_DEBUG(type)
-    PEMPEK_ASSERT_USED_ERROR(type)
-    PEMPEK_ASSERT_USED_FATAL(type)
-    PEMPEK_ASSERT_USED_CUSTOM(level, type)
+    PPK_ASSERT_USED_WARNING(type)
+    PPK_ASSERT_USED_DEBUG(type)
+    PPK_ASSERT_USED_ERROR(type)
+    PPK_ASSERT_USED_FATAL(type)
+    PPK_ASSERT_USED_CUSTOM(level, type)
 
 Arguably, unused return values are better of detected by the compiler. For
 instance GCC and Clang allow you to mark function with attributes:
@@ -212,59 +212,59 @@ Which will emit the following warning in case the return value is not used:
 
 However there is no MSVC++ equivalent. Well there is `__checkReturn` but it
 supposedly only have effect when running static code analysis and I failed to
-make it work with Visual Studio 2013 Express. Wrapping `PEMPEK_ASSERT_USED`
+make it work with Visual Studio 2013 Express. Wrapping `PPK_ASSERT_USED`
 around a return type is a cheap way to debug a program where you suspect a
 function return value is being ignored and shouldn't have been.
 
 ### Compile-time assertions
 
-    PEMPEK_STATIC_ASSERT(expression)
-    PEMPEK_STATIC_ASSERT(expression, message)
+    PPK_STATIC_ASSERT(expression)
+    PPK_STATIC_ASSERT(expression, message)
 
 In case of compile-time assertions, the message must be a string literal and
 can't be formated like with run-time assertions, e.g:
 
-    PEMPEK_STATIC_ASSERT(sizeof(foo) > sizeof(bar), "size mismatch");
+    PPK_STATIC_ASSERT(sizeof(foo) > sizeof(bar), "size mismatch");
 
-When compiled with a C++11 capable compiler, `PEMPEK_STATIC_ASSERT` defers to
+When compiled with a C++11 capable compiler, `PPK_STATIC_ASSERT` defers to
 `static_assert`. Contrary to `static_assert`, it's possible to use
-`PEMPEK_STATIC_ASSERT` without a message.
+`PPK_STATIC_ASSERT` without a message.
 
 ## Customizing compilation
 
-In order to use `PEMPEK_ASSERT` in your own project, you just have to bring in
+In order to use `PPK_ASSERT` in your own project, you just have to bring in
 the two `pempek_assert.h` and `pempek_assert.cpp` files. **It's that simple**.
 
 You can customize the library's behavior by defining the following macros:
 
-- `#define PEMPEK_ASSERT_ENABLED 1` or `#define PEMPEK_ASSERT_ENABLED 0`: enable
+- `#define PPK_ASSERT_ENABLED 1` or `#define PPK_ASSERT_ENABLED 0`: enable
   or disable assertions, otherwise enabled state is based on `NDEBUG`
   preprocessor token being defined
-- `PEMPEK_ASSERT_DEFAULT_LEVEL`: default level to use when using the
-  `PEMPEK_ASSERT` macro
-- `PEMPEK_ASSERT_DISABLE_STL`: `AssertionException` won't inherit from
+- `PPK_ASSERT_DEFAULT_LEVEL`: default level to use when using the
+  `PPK_ASSERT` macro
+- `PPK_ASSERT_DISABLE_STL`: `AssertionException` won't inherit from
   `std::exception`
-- `PEMPEK_ASSERT_DISABLE_EXCEPTIONS`: the library won't throw exceptions on
+- `PPK_ASSERT_DISABLE_EXCEPTIONS`: the library won't throw exceptions on
   `ERROR` level but instead rely on a user provided `throwException` function
   that will likely `abort()` the program
-- `PEMPEK_ASSERT_MESSAGE_BUFFER_SIZE`
+- `PPK_ASSERT_MESSAGE_BUFFER_SIZE`
 
 If you want to use a different prefix, provide your own header that includes
 `pempek_assert.h` and define the following:
 
     // custom prefix
-    #define ASSERT                PEMPEK_ASSERT
-    #define ASSERT_WARNING        PEMPEK_ASSERT_WARNING
-    #define ASSERT_DEBUG          PEMPEK_ASSERT_DEBUG
-    #define ASSERT_ERROR          PEMPEK_ASSERT_ERROR
-    #define ASSERT_FATAL          PEMPEK_ASSERT_FATAL
-    #define ASSERT_CUSTOM         PEMPEK_ASSERT_CUSTOM
-    #define ASSERT_USED           PEMPEK_ASSERT_USED
-    #define ASSERT_USED_WARNING   PEMPEK_ASSERT_USED_WARNING
-    #define ASSERT_USED_DEBUG     PEMPEK_ASSERT_USED_DEBUG
-    #define ASSERT_USED_ERROR     PEMPEK_ASSERT_USED_ERROR
-    #define ASSERT_USED_FATAL     PEMPEK_ASSERT_USED_FATAL
-    #define ASSERT_USED_CUSTOM    PEMPEK_ASSERT_USED_CUSTOM
+    #define ASSERT                PPK_ASSERT
+    #define ASSERT_WARNING        PPK_ASSERT_WARNING
+    #define ASSERT_DEBUG          PPK_ASSERT_DEBUG
+    #define ASSERT_ERROR          PPK_ASSERT_ERROR
+    #define ASSERT_FATAL          PPK_ASSERT_FATAL
+    #define ASSERT_CUSTOM         PPK_ASSERT_CUSTOM
+    #define ASSERT_USED           PPK_ASSERT_USED
+    #define ASSERT_USED_WARNING   PPK_ASSERT_USED_WARNING
+    #define ASSERT_USED_DEBUG     PPK_ASSERT_USED_DEBUG
+    #define ASSERT_USED_ERROR     PPK_ASSERT_USED_ERROR
+    #define ASSERT_USED_FATAL     PPK_ASSERT_USED_FATAL
+    #define ASSERT_USED_CUSTOM    PPK_ASSERT_USED_CUSTOM
 
 
 ### Compiling for Windows
@@ -289,7 +289,7 @@ There is an Xcode project located in the `_ios-xcode/` folder.
 If you prefer compiling from command line and deploying to a jailbroken device
 through SSH, use:
 
-    $ make -C _gnu-make/ binsubdir=ios CXX="$(xcrun --sdk iphoneos --find clang++) -isysroot $(xcrun --sdk iphoneos --show-sdk-path) -arch armv7 -arch armv7s -arch arm64" CPPFLAGS=-DPEMPEK_ASSERT_DEFAULT_HANDLER_STDIN postbuild="codesign -s 'iPhone Developer'"
+    $ make -C _gnu-make/ binsubdir=ios CXX="$(xcrun --sdk iphoneos --find clang++) -isysroot $(xcrun --sdk iphoneos --show-sdk-path) -arch armv7 -arch armv7s -arch arm64" CPPFLAGS=-DPPK_ASSERT_DEFAULT_HANDLER_STDIN postbuild="codesign -s 'iPhone Developer'"
 
 ### Compiling for Android
 
@@ -304,7 +304,7 @@ command:
 
 Now you can compile the self test and self benchmark programs by running:
 
-    $ make -C _gnu-make/ binsubdir=android CXX=/tmp/android-clang/bin/clang++ CXXFLAGS='-march=armv7-a -mfloat-abi=softfp -O2' LDFLAGS='-llog' CPPFLAGS=-DPEMPEK_ASSERT_DEFAULT_HANDLER_STDIN
+    $ make -C _gnu-make/ binsubdir=android CXX=/tmp/android-clang/bin/clang++ CXXFLAGS='-march=armv7-a -mfloat-abi=softfp -O2' LDFLAGS='-llog' CPPFLAGS=-DPPK_ASSERT_DEFAULT_HANDLER_STDIN
 
 --------------------------------------------------------------------------------
 
@@ -320,7 +320,7 @@ greatly been inspired by [Andrei Alexandrescu][@incomputable]'s CUJ articles:
 [enhancing-assertions]: http://www.drdobbs.com/cpp/enhancing-assertions/184403745
 [@incomputable]: https://twitter.com/incomputable
 
-I learnt the `PEMPEK_UNUSED` trick from [Branimir Karadžić][@bkaradzic].
+I learnt the `PPK_UNUSED` trick from [Branimir Karadžić][@bkaradzic].
 
 Finally, [`__VA_NARG__` has been invented by Laurent Deniau][__VA_NARG__].
 

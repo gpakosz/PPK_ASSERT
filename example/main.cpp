@@ -4,13 +4,13 @@
 #include <pempek_assert.h>
 
 // custom prefix
-#define ASSERT          PEMPEK_ASSERT
-#define ASSERT_WARNING  PEMPEK_ASSERT_WARNING
-#define ASSERT_DEBUG    PEMPEK_ASSERT_DEBUG
-#define ASSERT_ERROR    PEMPEK_ASSERT_ERROR
-#define ASSERT_FATAL    PEMPEK_ASSERT_FATAL
-#define ASSERT_CUSTOM   PEMPEK_ASSERT_CUSTOM
-#define ASSERT_USED     PEMPEK_ASSERT_USED
+#define ASSERT          PPK_ASSERT
+#define ASSERT_WARNING  PPK_ASSERT_WARNING
+#define ASSERT_DEBUG    PPK_ASSERT_DEBUG
+#define ASSERT_ERROR    PPK_ASSERT_ERROR
+#define ASSERT_FATAL    PPK_ASSERT_FATAL
+#define ASSERT_CUSTOM   PPK_ASSERT_CUSTOM
+#define ASSERT_USED     PPK_ASSERT_USED
 
 void trigger_assert_debug_even(int i)
 {
@@ -39,8 +39,8 @@ ASSERT_USED(std::vector<int>) trigger_assert_unused_return_value1()
   return std::vector<int>(10);
 }
 
-#undef PEMPEK_ASSERT_ENABLED
-#define PEMPEK_ASSERT_ENABLED 0
+#undef PPK_ASSERT_ENABLED
+#define PPK_ASSERT_ENABLED 0
 #include <pempek_assert.h>
 
 void trigger_assert_custom2()
@@ -54,8 +54,8 @@ ASSERT_USED(int) trigger_assert_unused_return_value2()
   return 0;
 }
 
-#undef PEMPEK_ASSERT_ENABLED
-#define PEMPEK_ASSERT_ENABLED 1
+#undef PPK_ASSERT_ENABLED
+#define PPK_ASSERT_ENABLED 1
 #include <pempek_assert.h>
 
 #if defined(_WIN32)
