@@ -84,7 +84,7 @@ E.g:
 This library defines different levels of severity:
 
 - `PPK_ASSERT_WARNING`
-- `PEKPEK_ASSERT_DEBUG`
+- `PPK_ASSERT_DEBUG`
 - `PPK_ASSERT_ERROR`
 - `PPK_ASSERT_FATAL`
 
