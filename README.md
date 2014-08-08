@@ -11,7 +11,7 @@
       float min = 0.0f;
       float max = 1.0f;
       float v = 2.0f;
-      BOOST_ASSERT_MSG(v > min && v < max, static_cast<std::ostringstream&>(std::ostringstream().seekp(0) << \
+      BOOST_ASSERT_MSG(v > min && v < max, static_cast<std::ostringstream&>(std::ostringstream().flush() << \
                       "invalid value: " << v << ", must be between " << min << " and " << max).str().c_str());
       return 0;
     }
