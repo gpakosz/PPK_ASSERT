@@ -79,7 +79,7 @@
 
 #define PPK_ASSERT_FILE __FILE__
 #define PPK_ASSERT_LINE __LINE__
-#if defined(__GNUC__)
+#if defined(__GNUC__) || defined(__clang__)
 #  define PPK_ASSERT_FUNCTION __PRETTY_FUNCTION__
 #else
 #  define PPK_ASSERT_FUNCTION __FUNCTION__
@@ -87,7 +87,7 @@
 
 #if defined(_MSC_VER)
   #define PPK_ASSERT_ALWAYS_INLINE __forceinline
-#elif defined(__GNUC__)
+#elif defined(__GNUC__) || defined(__clang__)
   #define PPK_ASSERT_ALWAYS_INLINE inline __attribute__((always_inline))
 #else
   #define PPK_ASSERT_ALWAYS_INLINE inline
@@ -110,7 +110,7 @@
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, PPK_ASSERT_NO_MACRO)
 
-#if defined(__GNUC__)
+#if defined(__GNUC__) || defined(__clang__)
 #  define PPK_ASSERT_LIKELY(arg) __builtin_expect(!!(arg), !0)
 #  define PPK_ASSERT_UNLIKELY(arg) __builtin_expect(!!(arg), 0)
 #else
@@ -172,6 +172,18 @@
 
 #  else
 
+#   if (defined(__GNUC__) && (__GNUC__ >= 4) && (__GNUC_MINOR__ >= 6)) || defined(__clang__)
+#     define _pragma(x) _Pragma(#x)
+#     define _PPK_ASSERT_WFORMAT_AS_ERROR_BEGIN\
+        _pragma(GCC diagnostic push)\
+        _pragma(GCC diagnostic error "-Wformat")
+#     define _PPK_ASSERT_WFORMAT_AS_ERROR_END\
+        _pragma(GCC diagnostic pop)
+#   else
+#     define _PPK_ASSERT_WFORMAT_AS_ERROR_BEGIN
+#     define _PPK_ASSERT_WFORMAT_AS_ERROR_END
+#   endif
+
     #define PPK_ASSERT_3(level, expression, ...)\
       do\
       {\
@@ -179,8 +191,10 @@
         if (PPK_ASSERT_LIKELY(expression) || _ignore || pempek::assert::implementation::ignoreAllAsserts());\
         else\
         {\
+          _PPK_ASSERT_WFORMAT_AS_ERROR_BEGIN\
           if (pempek::assert::implementation::handleAssert(PPK_ASSERT_FILE, PPK_ASSERT_LINE, PPK_ASSERT_FUNCTION, #expression, level, _ignore, __VA_ARGS__) == pempek::assert::implementation::AssertAction::Break)\
             PPK_ASSERT_DEBUG_BREAK();\
+          _PPK_ASSERT_WFORMAT_AS_ERROR_END\
         }\
       }\
       while (false)
@@ -387,7 +401,7 @@ namespace implementation {
                                                       const char* message);
 
 
-#if defined(__GNUC__)
+#if defined(__GNUC__) || defined(__clang__)
 #  define PPK_ASSERT_HANDLE_ASSERT_FORMAT __attribute__((format (printf, 7, 8)))
 #else
 #  define PPK_ASSERT_HANDLE_ASSERT_FORMAT
