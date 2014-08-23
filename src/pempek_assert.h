@@ -368,8 +368,8 @@ namespace implementation {
 
     enum AssertLevel
     {
-      Debug   = 32,
-      Warning = 64,
+      Warning = 32,
+      Debug   = 64,
       Error   = 128,
       Fatal   = 256
 
