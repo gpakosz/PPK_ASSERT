@@ -296,7 +296,7 @@ namespace assert {
     virtual const char* what() const PPK_ASSERT_EXCEPTION_NO_THROW;
 
     const char* file() const;
-    const int line() const;
+    int line() const;
     const char* function() const;
     const char* expression() const;
 
@@ -326,7 +326,7 @@ namespace assert {
     return _file;
   }
 
-  PPK_ASSERT_ALWAYS_INLINE const int AssertionException::line() const
+  PPK_ASSERT_ALWAYS_INLINE int AssertionException::line() const
   {
     return _line;
   }
