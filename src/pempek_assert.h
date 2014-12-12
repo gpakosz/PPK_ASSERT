@@ -514,6 +514,21 @@ namespace implementation {
 #undef PPK_ASSERT_USED_1
 #undef PPK_ASSERT_USED_2
 
+#if defined(_MSC_VER) && defined(_PREFAST_)
+
+  #define PPK_ASSERT_2(level, expression, ...) __analysis_assume(!!(expression))
+  #define PPK_ASSERT_USED_1(type)              type
+  #define PPK_ASSERT_USED_2(level, type)       type
+
+#elif defined(__clang__) && defined(__clang_analyzer__)
+
+  void its_going_to_be_ok(bool expression) __attribute__((analyzer_noreturn));
+  #define PPK_ASSERT_2(level, expression, ...) its_going_to_be_ok(!!(expression))
+  #define PPK_ASSERT_USED_1(type)              type
+  #define PPK_ASSERT_USED_2(level, type)       type
+
+#else
+
 #if PPK_ASSERT_ENABLED
 
   #define PPK_ASSERT_2(level, expression, ...) PPK_ASSERT_3(level, expression, __VA_ARGS__)
@@ -525,5 +540,7 @@ namespace implementation {
   #define PPK_ASSERT_2(level, expression, ...) PPK_ASSERT_UNUSED(expression)
   #define PPK_ASSERT_USED_1(type)              type
   #define PPK_ASSERT_USED_2(level, type)       type
+
+#endif
 
 #endif
