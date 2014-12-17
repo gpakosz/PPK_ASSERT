@@ -300,7 +300,7 @@ trailing `/` character).
 Next, the easy way is to make a standalone Android toolchain with the following
 command:
 
-    $ $NDK_ROOT/build/tools/make-standalone-toolchain.sh --system=$(uname -s | tr [A-Z] [a-z])-$(uname -m) --platform=android-3 --toolchain=arm-linux-androideabi-clang3.3 --install-dir=/tmp/android-clang
+    $ $NDK_ROOT/build/tools/make-standalone-toolchain.sh --system=$(uname -s | tr [A-Z] [a-z])-$(uname -m) --platform=android-3 --toolchain=arm-linux-androideabi-clang3.4 --install-dir=/tmp/android-clang
 
 Now you can compile the self test and self benchmark programs by running:
 
