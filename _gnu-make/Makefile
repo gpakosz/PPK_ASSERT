@@ -60,7 +60,7 @@ $(bindir)/test-no-exceptions: $(srcdir)/pempek_assert.cpp $(srcdir)/pempek_asser
 build: build-example
 build-example: $(bindir)/example
 
-$(bindir)/example: $(srcdir)/pempek_assert.cpp $(srcdir)/pempek_assert.h $(exampledir)/main.cpp 
+$(bindir)/example: $(srcdir)/pempek_assert.cpp $(srcdir)/pempek_assert.h $(exampledir)/main.cpp
 	mkdir -p $(@D)
 	$(CXX) -o $@ -I $(srcdir) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $(filter-out %.h,$^)
 	$(if $(postbuild),$(postbuild) $@)
