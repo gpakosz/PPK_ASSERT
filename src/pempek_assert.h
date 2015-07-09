@@ -81,6 +81,8 @@
 #define PPK_ASSERT_LINE __LINE__
 #if defined(__GNUC__) || defined(__clang__)
 #  define PPK_ASSERT_FUNCTION __PRETTY_FUNCTION__
+#elif defined(_MSC_VER)
+#  define PPK_ASSERT_FUNCTION __FUNCSIG__
 #else
 #  define PPK_ASSERT_FUNCTION __FUNCTION__
 #endif
