@@ -55,6 +55,15 @@
 
 // -- implementation -----------------------------------------------------------
 
+#if (defined(__GNUC__) && ((__GNUC__ * 1000 + __GNUC_MINOR__ * 100) >= 4600)) || defined(__clang__)
+#  pragma GCC diagnostic push
+#  pragma GCC diagnostic ignored "-Wvariadic-macros"
+#endif
+
+#if defined(__clang__)
+#  pragma GCC diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
+#endif
+
 #if !defined(PPK_ASSERT_H)
 #define PPK_ASSERT_H
 
@@ -174,7 +183,7 @@
 
 #  else
 
-#   if (defined(__GNUC__) && (__GNUC__ >= 4) && (__GNUC_MINOR__ >= 6)) || defined(__clang__)
+#   if (defined(__GNUC__) && ((__GNUC__ * 1000 + __GNUC_MINOR__ * 100) >= 4600)) || defined(__clang__)
 #     define _pragma(x) _Pragma(#x)
 #     define _PPK_ASSERT_WFORMAT_AS_ERROR_BEGIN\
         _pragma(GCC diagnostic push)\
@@ -545,4 +554,8 @@ namespace implementation {
 
 #endif
 
+#endif
+
+#if (defined(__GNUC__) && ((__GNUC__ * 1000 + __GNUC_MINOR__ * 100) >= 4600)) || defined(__clang__)
+#  pragma GCC diagnostic pop
 #endif

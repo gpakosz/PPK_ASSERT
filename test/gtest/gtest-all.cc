@@ -1,5 +1,8 @@
-#if defined(_MSC_VER)
-#pragma warning(disable: 4061 4365)
+#ifndef __clang_analyzer__
+#if (defined(__GNUC__) && ((__GNUC__ * 1000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__) >= 4201)) || defined(__clang__)
+#pragma GCC diagnostic ignored "-Wmissing-field-initializers"
+#elif defined(_MSC_VER)
+#pragma warning(push, 1)
 #endif
 // Copyright 2008, Google Inc.
 // All rights reserved.
@@ -10362,3 +10365,4 @@ const char* TypedTestCasePState::VerifyRegisteredTestNames(
 
 }  // namespace internal
 }  // namespace testing
+#endif

@@ -31,7 +31,7 @@ binsubdir := $(platform)-$(architecture)
 bindir := $(prefix)/bin/$(binsubdir)
 
 CPPFLAGS := -DPPK_ASSERT_LOG_FILE=\"assert.txt\" -DPPK_ASSERT_LOG_FILE_TRUNCATE
-CXXFLAGS := -O2 -g
+CXXFLAGS := -O2 -g -Wall -Wextra
 
 ifeq ($(platform),linux)
   GTEST_CXXFLAGS := -pthread
