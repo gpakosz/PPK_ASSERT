@@ -65,8 +65,9 @@ providing the following features:
 The library is designed to be lightweight would you decide to keep assertions
 enabled even in release builds (`#define PPK_ASSERT_ENABLED 1`).
 
-Each assertion eats up `sizeof(bool)` of stack, used to keep track whether the
-assertion should be ignored for the remaining lifetime of the program.
+By default, each assertion eats up `sizeof(bool)` of stack, used to keep track
+whether the assertion should be ignored for the remaining lifetime of the
+program. You can disable this feature (see [customizing compilation]).
 
 ### Message Formatting
 
@@ -248,6 +249,9 @@ You can customize the library's behavior by defining the following macros:
   `ERROR` level but instead rely on a user provided `throwException` function
   that will likely `abort()` the program
 - `PPK_ASSERT_MESSAGE_BUFFER_SIZE`
+- `PPK_ASSERT_DISABLE_IGNORE_LINE`: disables the injection of a `static bool`
+  variable used to keep track whether the assertion should be ignored for the
+  remaining lifetime of the program.
 
 If you want to use a different prefix, provide your own header that includes
 `pempek_assert.h` and define the following:

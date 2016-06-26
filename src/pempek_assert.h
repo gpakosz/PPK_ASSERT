@@ -165,21 +165,42 @@
 
   #if defined(_MSC_FULL_VER) && (_MSC_FULL_VER >= 140050215)
 
-    #define PPK_ASSERT_3(level, expression, ...)\
-      __pragma(warning(push))\
-      __pragma(warning(disable: 4127))\
-      do\
-      {\
-        static bool _ignore = false;\
-        if (PPK_ASSERT_LIKELY(expression) || _ignore || pempek::assert::implementation::ignoreAllAsserts());\
-        else\
+    #if defined(PPK_ASSERT_DISABLE_IGNORE_LINE)
+
+      #define PPK_ASSERT_3(level, expression, ...)\
+        __pragma(warning(push))\
+        __pragma(warning(disable: 4127))\
+        do\
         {\
-          if (pempek::assert::implementation::handleAssert(PPK_ASSERT_FILE, PPK_ASSERT_LINE, PPK_ASSERT_FUNCTION, #expression, level, _ignore, __VA_ARGS__) == pempek::assert::implementation::AssertAction::Break)\
-            PPK_ASSERT_DEBUG_BREAK();\
+          if (PPK_ASSERT_LIKELY(expression) || pempek::assert::implementation::ignoreAllAsserts());\
+          else\
+          {\
+            if (pempek::assert::implementation::handleAssert(PPK_ASSERT_FILE, PPK_ASSERT_LINE, PPK_ASSERT_FUNCTION, #expression, level, 0, __VA_ARGS__) == pempek::assert::implementation::AssertAction::Break)\
+              PPK_ASSERT_DEBUG_BREAK();\
+          }\
         }\
-      }\
-      while (false)\
-      __pragma(warning(pop))
+        while (false)\
+        __pragma(warning(pop))
+
+    #else
+
+      #define PPK_ASSERT_3(level, expression, ...)\
+        __pragma(warning(push))\
+        __pragma(warning(disable: 4127))\
+        do\
+        {\
+          static bool _ignore = false;\
+          if (PPK_ASSERT_LIKELY(expression) || _ignore || pempek::assert::implementation::ignoreAllAsserts());\
+          else\
+          {\
+            if (pempek::assert::implementation::handleAssert(PPK_ASSERT_FILE, PPK_ASSERT_LINE, PPK_ASSERT_FUNCTION, #expression, level, &_ignore, __VA_ARGS__) == pempek::assert::implementation::AssertAction::Break)\
+              PPK_ASSERT_DEBUG_BREAK();\
+          }\
+        }\
+        while (false)\
+        __pragma(warning(pop))
+
+    #endif
 
   #else
 
@@ -195,20 +216,40 @@
       #define _PPK_ASSERT_WFORMAT_AS_ERROR_END
     #endif
 
-    #define PPK_ASSERT_3(level, expression, ...)\
-      do\
-      {\
-        static bool _ignore = false;\
-        if (PPK_ASSERT_LIKELY(expression) || _ignore || pempek::assert::implementation::ignoreAllAsserts());\
-        else\
+    #if defined(PPK_ASSERT_DISABLE_IGNORE_LINE)
+
+      #define PPK_ASSERT_3(level, expression, ...)\
+        do\
         {\
-          _PPK_ASSERT_WFORMAT_AS_ERROR_BEGIN\
-          if (pempek::assert::implementation::handleAssert(PPK_ASSERT_FILE, PPK_ASSERT_LINE, PPK_ASSERT_FUNCTION, #expression, level, _ignore, __VA_ARGS__) == pempek::assert::implementation::AssertAction::Break)\
-            PPK_ASSERT_DEBUG_BREAK();\
-          _PPK_ASSERT_WFORMAT_AS_ERROR_END\
+          if (PPK_ASSERT_LIKELY(expression) || pempek::assert::implementation::ignoreAllAsserts());\
+          else\
+          {\
+            _PPK_ASSERT_WFORMAT_AS_ERROR_BEGIN\
+            if (pempek::assert::implementation::handleAssert(PPK_ASSERT_FILE, PPK_ASSERT_LINE, PPK_ASSERT_FUNCTION, #expression, level, 0, __VA_ARGS__) == pempek::assert::implementation::AssertAction::Break)\
+              PPK_ASSERT_DEBUG_BREAK();\
+            _PPK_ASSERT_WFORMAT_AS_ERROR_END\
+          }\
         }\
-      }\
-      while (false)
+        while (false)
+
+    #else
+
+      #define PPK_ASSERT_3(level, expression, ...)\
+        do\
+        {\
+          static bool _ignore = false;\
+          if (PPK_ASSERT_LIKELY(expression) || _ignore || pempek::assert::implementation::ignoreAllAsserts());\
+          else\
+          {\
+            _PPK_ASSERT_WFORMAT_AS_ERROR_BEGIN\
+            if (pempek::assert::implementation::handleAssert(PPK_ASSERT_FILE, PPK_ASSERT_LINE, PPK_ASSERT_FUNCTION, #expression, level, &_ignore, __VA_ARGS__) == pempek::assert::implementation::AssertAction::Break)\
+              PPK_ASSERT_DEBUG_BREAK();\
+            _PPK_ASSERT_WFORMAT_AS_ERROR_END\
+          }\
+        }\
+        while (false)
+
+    #endif
 
   #endif
 
@@ -395,7 +436,9 @@
         Abort,
         Break,
         Ignore,
+      #if !defined(PPK_ASSERT_DISABLE_IGNORE_LINE)
         IgnoreLine,
+      #endif
         IgnoreAll,
         Throw
 
@@ -422,7 +465,7 @@
                                             const char* function,
                                             const char* expression,
                                             int level,
-                                            bool& ignoreLine,
+                                            bool* ignoreLine,
                                             const char* message, ...) PPK_ASSERT_HANDLE_ASSERT_FORMAT;
 
     AssertHandler setAssertHandler(AssertHandler handler);

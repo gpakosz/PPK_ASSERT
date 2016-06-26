@@ -118,7 +118,7 @@ namespace {
       priority = ANDROID_LOG_FATAL;
 
     va_start(args, format);
-    __android_log_vprint(priority, PPK_ASSERT_LOG_TAG, format, args); 
+    __android_log_vprint(priority, PPK_ASSERT_LOG_TAG, format, args);
     va_start(args, format);
 #else
     PPK_ASSERT_UNUSED(level);
@@ -192,7 +192,11 @@ namespace {
 #if (!TARGET_OS_IPHONE && !TARGET_IPHONE_SIMULATOR) && (!defined(__ANDROID__) && !defined(ANDROID)) || defined(PPK_ASSERT_DEFAULT_HANDLER_STDIN)
       for (;;)
       {
+#if defined(PPK_ASSERT_DISABLE_IGNORE_LINE)
+        fprintf(stderr, "Press (I)gnore / Ignore (A)ll / (D)ebug / A(b)ort: ");
+#else
         fprintf(stderr, "Press (I)gnore / Ignore (F)orever / Ignore (A)ll / (D)ebug / A(b)ort: ");
+#endif
         fflush(stderr);
 
         char line[256];
@@ -223,9 +227,11 @@ namespace {
           case 'I':
             return AssertAction::Ignore;
 
+#  if !defined(PPK_ASSERT_DISABLE_IGNORE_LINE)
           case 'f':
           case 'F':
             return AssertAction::IgnoreLine;
+#  endif
 
           case 'a':
           case 'A':
@@ -430,7 +436,7 @@ namespace implementation {
                                           const char* function,
                                           const char* expression,
                                           int level,
-                                          bool& ignoreLine,
+                                          bool* ignoreLine,
                                           const char* message, ...)
   {
     char message_[PPK_ASSERT_MESSAGE_BUFFER_SIZE] = {0};
@@ -460,9 +466,13 @@ namespace implementation {
       case AssertAction::Abort:
         PPK_ASSERT_ABORT();
 
+#if !defined(PPK_ASSERT_DISABLE_IGNORE_LINE)
       case AssertAction::IgnoreLine:
-        ignoreLine = true;
+        *ignoreLine = true;
         break;
+#else
+      PPK_ASSERT_UNUSED(ignoreLine);
+#endif
 
       case AssertAction::IgnoreAll:
         ignoreAllAsserts(true);
