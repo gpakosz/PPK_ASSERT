@@ -6,3 +6,5 @@
 *.opensdf
 *.user
 *.sln.docstates
+*.opendb
+*.VC.db

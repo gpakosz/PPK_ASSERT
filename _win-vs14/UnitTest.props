@@ -7,7 +7,7 @@
     <ClCompile>
       <AdditionalIncludeDirectories>..\src;..\test;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_VARIADIC_MAX=10;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalOptions>/wd4820 /we4289 /wd4342 /wd4347 /wd4514 /we4545 /we4546 /we4547 /we4548 /we4549 /we4619 /we4623 /we4836 /we4905 /we4906 /we4928 /we4946 /wd4625 /wd4626 /wd4640 /wd4710 /wd 4711 /wd4571 /wd4986 /wd4668 /wd4350</AdditionalOptions>
+      <AdditionalOptions>/wd4350 /wd4514 /wd4571 /wd4577 /wd4623 /wd4625 /wd4626 /wd4640 /wd4668 /wd4986 /wd5026 /wd5027 /we4836 /we4946 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>

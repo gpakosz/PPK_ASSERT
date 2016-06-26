@@ -199,8 +199,8 @@ namespace {
 #endif
         fflush(stderr);
 
-        char line[256];
-        if (!fgets(line, sizeof(line), stdin))
+        char buffer[256];
+        if (!fgets(buffer, sizeof(buffer), stdin))
         {
           clearerr(stdin);
           fprintf(stderr, "\n");
@@ -210,7 +210,7 @@ namespace {
 
         // we eventually skip the leading spaces but that's it
         char input[2] = {'b', 0};
-        if (sscanf(line, " %1[a-zA-Z] ", input) != 1)
+        if (sscanf(buffer, " %1[a-zA-Z] ", input) != 1)
           continue;
 
         switch (*input)
