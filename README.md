@@ -273,7 +273,7 @@ If you want to use a different prefix, provide your own header that includes
 
 ### Compiling for Windows
 
-There is a Visual Studio 2012 solution in the `_win-vs11/` folder.
+There is a Visual Studio 2015 solution in the `_win-vs14/` folder.
 
 ### Compiling for Linux or Mac
 
