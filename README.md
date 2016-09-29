@@ -279,7 +279,7 @@ There is a Visual Studio 2015 solution in the `_win-vs14/` folder.
 
 There is a GNU Make 3.81 `MakeFile` in the `_gnu-make/` folder:
 
-    $ make -C _gnu-make/
+    $ make -j -C _gnu-make/
 
 ### Compiling for Mac
 
@@ -293,7 +293,7 @@ There is an Xcode project located in the `_ios-xcode/` folder.
 If you prefer compiling from command line and deploying to a jailbroken device
 through SSH, use:
 
-    $ make -C _gnu-make/ binsubdir=ios CXX="$(xcrun --sdk iphoneos --find clang++) -isysroot $(xcrun --sdk iphoneos --show-sdk-path) -arch armv7 -arch armv7s -arch arm64" CPPFLAGS=-DPPK_ASSERT_DEFAULT_HANDLER_STDIN postbuild="codesign -s 'iPhone Developer'"
+    $ make -j -C _gnu-make/ binsubdir=ios CXX="$(xcrun --sdk iphoneos --find clang++) -isysroot $(xcrun --sdk iphoneos --show-sdk-path) -arch armv7 -arch armv7s -arch arm64" CPPFLAGS=-DPPK_ASSERT_DEFAULT_HANDLER_STDIN postbuild="codesign -s 'iPhone Developer'"
 
 ### Compiling for Android
 
@@ -304,11 +304,11 @@ trailing `/` character).
 Next, the easy way is to make a standalone Android toolchain with the following
 command:
 
-    $ $NDK_ROOT/build/tools/make-standalone-toolchain.sh --system=$(uname -s | tr [A-Z] [a-z])-$(uname -m) --platform=android-3 --toolchain=arm-linux-androideabi-clang3.4 --install-dir=/tmp/android-clang
+    $ $NDK_ROOT/build/tools/make_standalone_toolchain.py --arch=arm --install-dir=/tmp/android-toolchain
 
 Now you can compile the self test and self benchmark programs by running:
 
-    $ make -C _gnu-make/ binsubdir=android CXX=/tmp/android-clang/bin/clang++ CXXFLAGS='-march=armv7-a -mfloat-abi=softfp -O2' LDFLAGS='-llog' CPPFLAGS=-DPPK_ASSERT_DEFAULT_HANDLER_STDIN
+    $ make -j -C _gnu-make/ binsubdir=android CXX=/tmp/android-toolchain/bin/clang++ LDFLAGS='-llog' CPPFLAGS=-DPPK_ASSERT_DEFAULT_HANDLER_STDIN
 
 --------------------------------------------------------------------------------
 
