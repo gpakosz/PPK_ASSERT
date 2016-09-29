@@ -125,8 +125,8 @@
     #define PPK_ASSERT_LIKELY(arg) __builtin_expect(!!(arg), !0)
     #define PPK_ASSERT_UNLIKELY(arg) __builtin_expect(!!(arg), 0)
   #else
-    #define PPK_ASSERT_LIKELY(arg) arg
-    #define PPK_ASSERT_UNLIKELY(arg) !arg
+    #define PPK_ASSERT_LIKELY(arg) (arg)
+    #define PPK_ASSERT_UNLIKELY(arg) (arg)
   #endif
 
   #define PPK_ASSERT_UNUSED(expression) (void)(true ? (void)0 : ((void)(expression)))
