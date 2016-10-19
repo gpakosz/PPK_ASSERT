@@ -99,7 +99,7 @@ $(bindir)/example: $(srcdir)/pempek_assert.cpp $(srcdir)/pempek_assert.h $(examp
 
 $(bindir)/example_shared: $(srcdir)/pempek_assert.h $(exampledir)/main.cpp
 	mkdir -p $(@D)
-	$(CXX) -o $@ -I $(srcdir) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -L$(libdir) -lppkassert $(filter-out %.h,$^)
+	$(CXX) -o $@ -I $(srcdir) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -L$(libdir) $(filter-out %.h,$^) -lppkassert
 	$(if $(postbuild),$(postbuild) $@)
 
 .PHONY: test
