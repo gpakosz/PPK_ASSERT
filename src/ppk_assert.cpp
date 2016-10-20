@@ -156,12 +156,12 @@ namespace {
       return print(out, level, "Assertion '%s' failed (level = %d)\n", expression, level);
   }
 
-  AssertAction::AssertAction _defaultHandler( const char* file,
-                                              int line,
-                                              const char* function,
-                                              const char* expression,
-                                              int level,
-                                              const char* message)
+  AssertAction::AssertAction PPK_ASSERT_CALL _defaultHandler( const char* file,
+                                                              int line,
+                                                              const char* function,
+                                                              const char* expression,
+                                                              int level,
+                                                              const char* message)
   {
 #if defined(_WIN32)
     if (::GetConsoleWindow() == NULL)
@@ -408,12 +408,12 @@ namespace implementation {
     bool _ignoreAll = false;
   }
 
-  void ignoreAllAsserts(bool value)
+  void PPK_ASSERT_CALL ignoreAllAsserts(bool value)
   {
     _ignoreAll = value;
   }
 
-  bool ignoreAllAsserts()
+  bool PPK_ASSERT_CALL ignoreAllAsserts()
   {
     return _ignoreAll;
   }
@@ -422,7 +422,7 @@ namespace implementation {
     AssertHandler _handler = _defaultHandler;
   }
 
-  AssertHandler setAssertHandler(AssertHandler handler)
+  AssertHandler PPK_ASSERT_CALL setAssertHandler(AssertHandler handler)
   {
     AssertHandler previous = _handler;
 
@@ -431,13 +431,13 @@ namespace implementation {
     return previous;
   }
 
-  AssertAction::AssertAction handleAssert(const char* file,
-                                          int line,
-                                          const char* function,
-                                          const char* expression,
-                                          int level,
-                                          bool* ignoreLine,
-                                          const char* message, ...)
+  AssertAction::AssertAction PPK_ASSERT_CALL handleAssert(const char* file,
+                                                          int line,
+                                                          const char* function,
+                                                          const char* expression,
+                                                          int level,
+                                                          bool* ignoreLine,
+                                                          const char* message, ...)
   {
     char message_[PPK_ASSERT_MESSAGE_BUFFER_SIZE] = {0};
     const char* file_;

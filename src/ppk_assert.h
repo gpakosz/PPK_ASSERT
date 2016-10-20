@@ -448,12 +448,16 @@
 
     } // AssertAction
 
-    typedef AssertAction::AssertAction (*AssertHandler)(const char* file,
-                                                        int line,
-                                                        const char* function,
-                                                        const char* expression,
-                                                        int level,
-                                                        const char* message);
+    #if !defined(PPK_ASSERT_CALL)
+      #define PPK_ASSERT_CALL
+    #endif
+
+    typedef AssertAction::AssertAction (PPK_ASSERT_CALL *AssertHandler)(const char* file,
+                                                                        int line,
+                                                                        const char* function,
+                                                                        const char* expression,
+                                                                        int level,
+                                                                        const char* message);
 
 
   #if defined(__GNUC__) || defined(__clang__)
@@ -462,18 +466,27 @@
     #define PPK_ASSERT_HANDLE_ASSERT_FORMAT
   #endif
 
-    AssertAction::AssertAction handleAssert(const char* file,
-                                            int line,
-                                            const char* function,
-                                            const char* expression,
-                                            int level,
-                                            bool* ignoreLine,
-                                            const char* message, ...) PPK_ASSERT_HANDLE_ASSERT_FORMAT;
+  #if !defined(PPK_ASSERT_FUNCSPEC)
+    #define PPK_ASSERT_FUNCSPEC
+  #endif
 
-    AssertHandler setAssertHandler(AssertHandler handler);
+    PPK_ASSERT_FUNCSPEC
+    AssertAction::AssertAction PPK_ASSERT_CALL handleAssert(const char* file,
+                                                            int line,
+                                                            const char* function,
+                                                            const char* expression,
+                                                            int level,
+                                                            bool* ignoreLine,
+                                                            const char* message, ...) PPK_ASSERT_HANDLE_ASSERT_FORMAT;
 
-    void ignoreAllAsserts(bool value);
-    bool ignoreAllAsserts();
+    PPK_ASSERT_FUNCSPEC
+    AssertHandler PPK_ASSERT_CALL setAssertHandler(AssertHandler handler);
+
+    PPK_ASSERT_FUNCSPEC
+    void PPK_ASSERT_CALL ignoreAllAsserts(bool value);
+
+    PPK_ASSERT_FUNCSPEC
+    bool PPK_ASSERT_CALL ignoreAllAsserts();
 
   #if defined(PPK_ASSERT_CXX11)
 
