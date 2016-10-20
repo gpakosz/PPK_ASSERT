@@ -67,18 +67,18 @@
 #if !defined(PPK_ASSERT_H)
   #define PPK_ASSERT_H
 
-  #define PPK_ASSERT(...)                    PPK_ASSERT_(pempek::assert::implementation::AssertLevel::PPK_ASSERT_DEFAULT_LEVEL, __VA_ARGS__)
-  #define PPK_ASSERT_WARNING(...)            PPK_ASSERT_(pempek::assert::implementation::AssertLevel::Warning, __VA_ARGS__)
-  #define PPK_ASSERT_DEBUG(...)              PPK_ASSERT_(pempek::assert::implementation::AssertLevel::Debug, __VA_ARGS__)
-  #define PPK_ASSERT_ERROR(...)              PPK_ASSERT_(pempek::assert::implementation::AssertLevel::Error, __VA_ARGS__)
-  #define PPK_ASSERT_FATAL(...)              PPK_ASSERT_(pempek::assert::implementation::AssertLevel::Fatal, __VA_ARGS__)
+  #define PPK_ASSERT(...)                    PPK_ASSERT_(ppk::assert::implementation::AssertLevel::PPK_ASSERT_DEFAULT_LEVEL, __VA_ARGS__)
+  #define PPK_ASSERT_WARNING(...)            PPK_ASSERT_(ppk::assert::implementation::AssertLevel::Warning, __VA_ARGS__)
+  #define PPK_ASSERT_DEBUG(...)              PPK_ASSERT_(ppk::assert::implementation::AssertLevel::Debug, __VA_ARGS__)
+  #define PPK_ASSERT_ERROR(...)              PPK_ASSERT_(ppk::assert::implementation::AssertLevel::Error, __VA_ARGS__)
+  #define PPK_ASSERT_FATAL(...)              PPK_ASSERT_(ppk::assert::implementation::AssertLevel::Fatal, __VA_ARGS__)
   #define PPK_ASSERT_CUSTOM(level, ...)      PPK_ASSERT_(level, __VA_ARGS__)
 
   #define PPK_ASSERT_USED(...)               PPK_ASSERT_USED_(__VA_ARGS__)
-  #define PPK_ASSERT_USED_WARNING(...)       PPK_ASSERT_USED_(pempek::assert::implementation::AssertLevel::Warning, __VA_ARGS__)
-  #define PPK_ASSERT_USED_DEBUG(...)         PPK_ASSERT_USED_(pempek::assert::implementation::AssertLevel::Debug, __VA_ARGS__)
-  #define PPK_ASSERT_USED_ERROR(...)         PPK_ASSERT_USED_(pempek::assert::implementation::AssertLevel::Error, __VA_ARGS__)
-  #define PPK_ASSERT_USED_FATAL(...)         PPK_ASSERT_USED_(pempek::assert::implementation::AssertLevel::Fatal, __VA_ARGS__)
+  #define PPK_ASSERT_USED_WARNING(...)       PPK_ASSERT_USED_(ppk::assert::implementation::AssertLevel::Warning, __VA_ARGS__)
+  #define PPK_ASSERT_USED_DEBUG(...)         PPK_ASSERT_USED_(ppk::assert::implementation::AssertLevel::Debug, __VA_ARGS__)
+  #define PPK_ASSERT_USED_ERROR(...)         PPK_ASSERT_USED_(ppk::assert::implementation::AssertLevel::Error, __VA_ARGS__)
+  #define PPK_ASSERT_USED_FATAL(...)         PPK_ASSERT_USED_(ppk::assert::implementation::AssertLevel::Fatal, __VA_ARGS__)
   #define PPK_ASSERT_USED_CUSTOM(level, ...) PPK_ASSERT_USED_(level, __VA_ARGS__)
 
 
@@ -172,10 +172,10 @@
         __pragma(warning(disable: 4127))\
         do\
         {\
-          if (PPK_ASSERT_LIKELY(expression) || pempek::assert::implementation::ignoreAllAsserts());\
+          if (PPK_ASSERT_LIKELY(expression) || ppk::assert::implementation::ignoreAllAsserts());\
           else\
           {\
-            if (pempek::assert::implementation::handleAssert(PPK_ASSERT_FILE, PPK_ASSERT_LINE, PPK_ASSERT_FUNCTION, #expression, level, 0, __VA_ARGS__) == pempek::assert::implementation::AssertAction::Break)\
+            if (ppk::assert::implementation::handleAssert(PPK_ASSERT_FILE, PPK_ASSERT_LINE, PPK_ASSERT_FUNCTION, #expression, level, 0, __VA_ARGS__) == ppk::assert::implementation::AssertAction::Break)\
               PPK_ASSERT_DEBUG_BREAK();\
           }\
         }\
@@ -190,10 +190,10 @@
         do\
         {\
           static bool _ignore = false;\
-          if (PPK_ASSERT_LIKELY(expression) || _ignore || pempek::assert::implementation::ignoreAllAsserts());\
+          if (PPK_ASSERT_LIKELY(expression) || _ignore || ppk::assert::implementation::ignoreAllAsserts());\
           else\
           {\
-            if (pempek::assert::implementation::handleAssert(PPK_ASSERT_FILE, PPK_ASSERT_LINE, PPK_ASSERT_FUNCTION, #expression, level, &_ignore, __VA_ARGS__) == pempek::assert::implementation::AssertAction::Break)\
+            if (ppk::assert::implementation::handleAssert(PPK_ASSERT_FILE, PPK_ASSERT_LINE, PPK_ASSERT_FUNCTION, #expression, level, &_ignore, __VA_ARGS__) == ppk::assert::implementation::AssertAction::Break)\
               PPK_ASSERT_DEBUG_BREAK();\
           }\
         }\
@@ -221,11 +221,11 @@
       #define PPK_ASSERT_3(level, expression, ...)\
         do\
         {\
-          if (PPK_ASSERT_LIKELY(expression) || pempek::assert::implementation::ignoreAllAsserts());\
+          if (PPK_ASSERT_LIKELY(expression) || ppk::assert::implementation::ignoreAllAsserts());\
           else\
           {\
             _PPK_ASSERT_WFORMAT_AS_ERROR_BEGIN\
-            if (pempek::assert::implementation::handleAssert(PPK_ASSERT_FILE, PPK_ASSERT_LINE, PPK_ASSERT_FUNCTION, #expression, level, 0, __VA_ARGS__) == pempek::assert::implementation::AssertAction::Break)\
+            if (ppk::assert::implementation::handleAssert(PPK_ASSERT_FILE, PPK_ASSERT_LINE, PPK_ASSERT_FUNCTION, #expression, level, 0, __VA_ARGS__) == ppk::assert::implementation::AssertAction::Break)\
               PPK_ASSERT_DEBUG_BREAK();\
             _PPK_ASSERT_WFORMAT_AS_ERROR_END\
           }\
@@ -238,11 +238,11 @@
         do\
         {\
           static bool _ignore = false;\
-          if (PPK_ASSERT_LIKELY(expression) || _ignore || pempek::assert::implementation::ignoreAllAsserts());\
+          if (PPK_ASSERT_LIKELY(expression) || _ignore || ppk::assert::implementation::ignoreAllAsserts());\
           else\
           {\
             _PPK_ASSERT_WFORMAT_AS_ERROR_BEGIN\
-            if (pempek::assert::implementation::handleAssert(PPK_ASSERT_FILE, PPK_ASSERT_LINE, PPK_ASSERT_FUNCTION, #expression, level, &_ignore, __VA_ARGS__) == pempek::assert::implementation::AssertAction::Break)\
+            if (ppk::assert::implementation::handleAssert(PPK_ASSERT_FILE, PPK_ASSERT_LINE, PPK_ASSERT_FUNCTION, #expression, level, &_ignore, __VA_ARGS__) == ppk::assert::implementation::AssertAction::Break)\
               PPK_ASSERT_DEBUG_BREAK();\
             _PPK_ASSERT_WFORMAT_AS_ERROR_END\
           }\
@@ -261,11 +261,11 @@
     #define PPK_STATIC_ASSERT_0(expression, message) static_assert(expression, message)
   #else
     #define PPK_STATIC_ASSERT_0(expression, message)\
-      struct PPK_ASSERT_JOIN(__pempek_assert_static_assertion_at_line_, PPK_ASSERT_LINE)\
+      struct PPK_ASSERT_JOIN(_ppk_static_assertion_at_line_, PPK_ASSERT_LINE)\
       {\
-        pempek::assert::implementation::StaticAssertion<static_cast<bool>((expression))> PPK_ASSERT_JOIN(STATIC_ASSERTION_FAILED_AT_LINE_, PPK_ASSERT_LINE);\
+        ppk::assert::implementation::StaticAssertion<static_cast<bool>((expression))> PPK_ASSERT_JOIN(STATIC_ASSERTION_FAILED_AT_LINE_, PPK_ASSERT_LINE);\
       };\
-      typedef pempek::assert::implementation::StaticAssertionTest<sizeof(PPK_ASSERT_JOIN(__pempek_assert_static_assertion_at_line_, PPK_ASSERT_LINE))> PPK_ASSERT_JOIN(__pempek_assert_static_assertion_test_at_line_, PPK_ASSERT_LINE)
+      typedef ppk::assert::implementation::StaticAssertionTest<sizeof(PPK_ASSERT_JOIN(_ppk_static_assertion_at_line_, PPK_ASSERT_LINE))> PPK_ASSERT_JOIN(_ppk_static_assertion_test_at_line_, PPK_ASSERT_LINE)
       // note that we wrap the non existing type inside a struct to avoid warning
       // messages about unused variables when static assertions are used at function
       // scope
@@ -274,7 +274,7 @@
   #define PPK_STATIC_ASSERT_1(expression)  PPK_STATIC_ASSERT_0(expression, #expression)
 
   #if !defined (PPK_ASSERT_CXX11)
-    namespace pempek {
+    namespace ppk {
     namespace assert {
     namespace implementation {
 
@@ -293,7 +293,7 @@
 
     } // namespace implementation
     } // namespace assert
-    } // namespace pempek
+    } // namespace ppk
   #endif
 
   #if !defined(PPK_ASSERT_DISABLE_STL)
@@ -322,7 +322,7 @@
     #include <utility>
   #endif
 
-  namespace pempek {
+  namespace ppk {
   namespace assert {
 
   #if !defined(PPK_ASSERT_DISABLE_STL)
@@ -411,7 +411,7 @@
     #else
 
       // user defined, the behavior is undefined if the function returns
-      void throwException(const pempek::assert::AssertionException& e);
+      void throwException(const ppk::assert::AssertionException& e);
 
     #endif
 
@@ -559,7 +559,7 @@
   } // namespace implementation
 
   } // namespace assert
-  } // namespace pempek
+  } // namespace ppk
 
 #endif
 
@@ -585,8 +585,8 @@
   #if PPK_ASSERT_ENABLED
 
     #define PPK_ASSERT_2(level, expression, ...) PPK_ASSERT_3(level, expression, __VA_ARGS__)
-    #define PPK_ASSERT_USED_1(type)              pempek::assert::implementation::AssertUsedWrapper<pempek::assert::implementation::AssertLevel::PPK_ASSERT_DEFAULT_LEVEL, type>
-    #define PPK_ASSERT_USED_2(level, type)       pempek::assert::implementation::AssertUsedWrapper<level, type>
+    #define PPK_ASSERT_USED_1(type)              ppk::assert::implementation::AssertUsedWrapper<ppk::assert::implementation::AssertLevel::PPK_ASSERT_DEFAULT_LEVEL, type>
+    #define PPK_ASSERT_USED_2(level, type)       ppk::assert::implementation::AssertUsedWrapper<level, type>
 
   #else
 

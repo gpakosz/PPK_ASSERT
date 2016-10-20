@@ -7,7 +7,7 @@
 #include <windows.h>
 #endif
 
-#include <pempek_assert.h>
+#include <ppk_assert.h>
 
 #include <cstdio>  // fprintf() and vsnprintf()
 #include <cstring>
@@ -51,8 +51,8 @@
 
 namespace {
 
-  namespace AssertLevel = pempek::assert::implementation::AssertLevel;
-  namespace AssertAction = pempek::assert::implementation::AssertAction;
+  namespace AssertLevel = ppk::assert::implementation::AssertLevel;
+  namespace AssertAction = ppk::assert::implementation::AssertAction;
 
   typedef int (*printHandler)(FILE* out, int, const char* format, ...);
 
@@ -259,12 +259,12 @@ namespace {
               const char* expression,
               const char* message)
   {
-    using pempek::assert::implementation::throwException;
-    throwException(pempek::assert::AssertionException(file, line, function, expression, message));
+    using ppk::assert::implementation::throwException;
+    throwException(ppk::assert::AssertionException(file, line, function, expression, message));
   }
 }
 
-namespace pempek {
+namespace ppk {
 namespace assert {
 
   AssertionException::AssertionException(const char* file,
@@ -494,4 +494,4 @@ namespace implementation {
 
 } // namespace implementation
 } // namespace assert
-} // namespace pempek
+} // namespace ppk

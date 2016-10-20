@@ -18,7 +18,7 @@
 
 **vs**
 
-    #include <pempek_assert.h>
+    #include <ppk_assert.h>
 
     int main()
     {
@@ -32,7 +32,7 @@
 
 Now which do you prefer? I know which I prefer.
 
-Just drop `pempek_assert.h` and `pempek_assert.cpp` into your build and get
+Just drop `ppk_assert.h` and `ppk_assert.cpp` into your build and get
 started. (see also [customizing compilation])
 
 [customizing compilation]: #customizing-compilation
@@ -169,7 +169,7 @@ return the action to be performed:
 
 To install your custom handler, call:
 
-    pempek::assert::implementation::setAssertHandler(customHandler);
+    ppk::assert::implementation::setAssertHandler(customHandler);
 
 ### Unused Return Values
 
@@ -234,7 +234,7 @@ When compiled with a C++11 capable compiler, `PPK_STATIC_ASSERT` defers to
 ## Customizing compilation
 
 In order to use `PPK_ASSERT` in your own project, you just have to bring in
-the two `pempek_assert.h` and `pempek_assert.cpp` files. **It's that simple**.
+the two `ppk_assert.h` and `ppk_assert.cpp` files. **It's that simple**.
 
 You can customize the library's behavior by defining the following macros:
 
@@ -254,7 +254,7 @@ You can customize the library's behavior by defining the following macros:
   remaining lifetime of the program.
 
 If you want to use a different prefix, provide your own header that includes
-`pempek_assert.h` and define the following:
+`ppk_assert.h` and define the following:
 
     // custom prefix
     #define ASSERT                PPK_ASSERT

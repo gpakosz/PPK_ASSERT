@@ -19,12 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\pempek_assert.cpp" />
+    <ClCompile Include="..\src\ppk_assert.cpp" />
     <ClCompile Include="..\test\gtest\gtest-all.cc" />
-    <ClCompile Include="..\test\pempek_assert_test.cpp" />
+    <ClCompile Include="..\test\ppk_assert_test.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\pempek_assert.h" />
+    <ClInclude Include="..\src\ppk_assert.h" />
     <ClInclude Include="..\test\gtest\gtest.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

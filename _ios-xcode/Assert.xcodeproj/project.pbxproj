@@ -7,27 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1A7A0B55182FABD30099EA41 /* pempek_assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A7335C7182EC34E00691A33 /* pempek_assert.cpp */; };
-		1A7A0B56182FABD70099EA41 /* pempek_assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A7335C7182EC34E00691A33 /* pempek_assert.cpp */; };
+		1A7A0B55182FABD30099EA41 /* ppk_assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A7335C7182EC34E00691A33 /* ppk_assert.cpp */; };
+		1A7A0B56182FABD70099EA41 /* ppk_assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A7335C7182EC34E00691A33 /* ppk_assert.cpp */; };
 		1A7A0B57182FABDA0099EA41 /* gtest-all.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1A7335C9182EC35700691A33 /* gtest-all.cc */; };
 		1A7A0B58182FABDD0099EA41 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A7335CB182EC36200691A33 /* main.cpp */; };
-		1A7A0B5B182FAC380099EA41 /* pempek_assert_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A7A0B59182FAC350099EA41 /* pempek_assert_test.cpp */; };
-		1A7A0B7418316DD60099EA41 /* pempek_assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A7335C7182EC34E00691A33 /* pempek_assert.cpp */; };
+		1A7A0B5B182FAC380099EA41 /* ppk_assert_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A7A0B59182FAC350099EA41 /* ppk_assert_test.cpp */; };
+		1A7A0B7418316DD60099EA41 /* ppk_assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A7335C7182EC34E00691A33 /* ppk_assert.cpp */; };
 		1A7A0B7518316DD60099EA41 /* gtest-all.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1A7335C9182EC35700691A33 /* gtest-all.cc */; };
-		1A7A0B7618316DD60099EA41 /* pempek_assert_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A7A0B59182FAC350099EA41 /* pempek_assert_test.cpp */; };
-		1A7A0B8018316E220099EA41 /* pempek_assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A7335C7182EC34E00691A33 /* pempek_assert.cpp */; };
+		1A7A0B7618316DD60099EA41 /* ppk_assert_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A7A0B59182FAC350099EA41 /* ppk_assert_test.cpp */; };
+		1A7A0B8018316E220099EA41 /* ppk_assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A7335C7182EC34E00691A33 /* ppk_assert.cpp */; };
 		1A7A0B8118316E220099EA41 /* gtest-all.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1A7335C9182EC35700691A33 /* gtest-all.cc */; };
-		1A7A0B8218316E220099EA41 /* pempek_assert_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A7A0B59182FAC350099EA41 /* pempek_assert_test.cpp */; };
+		1A7A0B8218316E220099EA41 /* ppk_assert_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A7A0B59182FAC350099EA41 /* ppk_assert_test.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1A7335C7182EC34E00691A33 /* pempek_assert.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = pempek_assert.cpp; sourceTree = "<group>"; };
-		1A7335C8182EC34E00691A33 /* pempek_assert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pempek_assert.h; sourceTree = "<group>"; };
+		1A7335C7182EC34E00691A33 /* ppk_assert.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ppk_assert.cpp; sourceTree = "<group>"; };
+		1A7335C8182EC34E00691A33 /* ppk_assert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ppk_assert.h; sourceTree = "<group>"; };
 		1A7335C9182EC35700691A33 /* gtest-all.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "gtest-all.cc"; sourceTree = "<group>"; };
 		1A7335CA182EC35700691A33 /* gtest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gtest.h; sourceTree = "<group>"; };
 		1A7335CB182EC36200691A33 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		1A7A0B53182FAB5C0099EA41 /* Assert-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Assert-Info.plist"; sourceTree = "<group>"; };
-		1A7A0B59182FAC350099EA41 /* pempek_assert_test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pempek_assert_test.cpp; sourceTree = "<group>"; };
+		1A7A0B59182FAC350099EA41 /* ppk_assert_test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ppk_assert_test.cpp; sourceTree = "<group>"; };
 		1A7A0B7C18316DD60099EA41 /* test copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "test copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A7A0B8818316E220099EA41 /* test-no-stl copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "test-no-stl copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A98F9C917A4018400BF09FF /* example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,8 +69,8 @@
 		1A7335C3182EC2E000691A33 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				1A7335C7182EC34E00691A33 /* pempek_assert.cpp */,
-				1A7335C8182EC34E00691A33 /* pempek_assert.h */,
+				1A7335C7182EC34E00691A33 /* ppk_assert.cpp */,
+				1A7335C8182EC34E00691A33 /* ppk_assert.h */,
 			);
 			name = src;
 			path = ../src;
@@ -88,7 +88,7 @@
 		1A7335C5182EC30600691A33 /* test */ = {
 			isa = PBXGroup;
 			children = (
-				1A7A0B59182FAC350099EA41 /* pempek_assert_test.cpp */,
+				1A7A0B59182FAC350099EA41 /* ppk_assert_test.cpp */,
 				1A7335C6182EC31900691A33 /* gtest */,
 			);
 			name = test;
@@ -262,9 +262,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A7A0B7418316DD60099EA41 /* pempek_assert.cpp in Sources */,
+				1A7A0B7418316DD60099EA41 /* ppk_assert.cpp in Sources */,
 				1A7A0B7518316DD60099EA41 /* gtest-all.cc in Sources */,
-				1A7A0B7618316DD60099EA41 /* pempek_assert_test.cpp in Sources */,
+				1A7A0B7618316DD60099EA41 /* ppk_assert_test.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,9 +272,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A7A0B8018316E220099EA41 /* pempek_assert.cpp in Sources */,
+				1A7A0B8018316E220099EA41 /* ppk_assert.cpp in Sources */,
 				1A7A0B8118316E220099EA41 /* gtest-all.cc in Sources */,
-				1A7A0B8218316E220099EA41 /* pempek_assert_test.cpp in Sources */,
+				1A7A0B8218316E220099EA41 /* ppk_assert_test.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,7 +283,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A7A0B58182FABDD0099EA41 /* main.cpp in Sources */,
-				1A7A0B55182FABD30099EA41 /* pempek_assert.cpp in Sources */,
+				1A7A0B55182FABD30099EA41 /* ppk_assert.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,9 +291,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A7A0B56182FABD70099EA41 /* pempek_assert.cpp in Sources */,
+				1A7A0B56182FABD70099EA41 /* ppk_assert.cpp in Sources */,
 				1A7A0B57182FABDA0099EA41 /* gtest-all.cc in Sources */,
-				1A7A0B5B182FAC380099EA41 /* pempek_assert_test.cpp in Sources */,
+				1A7A0B5B182FAC380099EA41 /* ppk_assert_test.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

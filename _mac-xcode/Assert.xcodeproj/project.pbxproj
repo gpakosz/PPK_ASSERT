@@ -7,16 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1A42F182182EBAB500F3880C /* pempek_assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A42F17C182EBA3600F3880C /* pempek_assert.cpp */; };
-		1A42F183182EBAB600F3880C /* pempek_assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A42F17C182EBA3600F3880C /* pempek_assert.cpp */; };
+		1A42F182182EBAB500F3880C /* ppk_assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A42F17C182EBA3600F3880C /* ppk_assert.cpp */; };
+		1A42F183182EBAB600F3880C /* ppk_assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A42F17C182EBA3600F3880C /* ppk_assert.cpp */; };
 		1A42F184182EBABC00F3880C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A42F17E182EBA4300F3880C /* main.cpp */; };
-		1A42F185182EBABF00F3880C /* pempek_assert_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A42F181182EBA7900F3880C /* pempek_assert_test.cpp */; };
+		1A42F185182EBABF00F3880C /* ppk_assert_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A42F181182EBA7900F3880C /* ppk_assert_test.cpp */; };
 		1A42F186182EBAC300F3880C /* gtest-all.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1A42F17F182EBA5000F3880C /* gtest-all.cc */; };
-		1A7A0B5E18316C790099EA41 /* pempek_assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A42F17C182EBA3600F3880C /* pempek_assert.cpp */; };
-		1A7A0B5F18316C790099EA41 /* pempek_assert_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A42F181182EBA7900F3880C /* pempek_assert_test.cpp */; };
+		1A7A0B5E18316C790099EA41 /* ppk_assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A42F17C182EBA3600F3880C /* ppk_assert.cpp */; };
+		1A7A0B5F18316C790099EA41 /* ppk_assert_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A42F181182EBA7900F3880C /* ppk_assert_test.cpp */; };
 		1A7A0B6018316C790099EA41 /* gtest-all.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1A42F17F182EBA5000F3880C /* gtest-all.cc */; };
-		1A7A0B6918316D7E0099EA41 /* pempek_assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A42F17C182EBA3600F3880C /* pempek_assert.cpp */; };
-		1A7A0B6A18316D7E0099EA41 /* pempek_assert_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A42F181182EBA7900F3880C /* pempek_assert_test.cpp */; };
+		1A7A0B6918316D7E0099EA41 /* ppk_assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A42F17C182EBA3600F3880C /* ppk_assert.cpp */; };
+		1A7A0B6A18316D7E0099EA41 /* ppk_assert_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A42F181182EBA7900F3880C /* ppk_assert_test.cpp */; };
 		1A7A0B6B18316D7E0099EA41 /* gtest-all.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1A42F17F182EBA5000F3880C /* gtest-all.cc */; };
 /* End PBXBuildFile section */
 
@@ -60,12 +60,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1A42F17C182EBA3600F3880C /* pempek_assert.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = pempek_assert.cpp; sourceTree = "<group>"; };
-		1A42F17D182EBA3600F3880C /* pempek_assert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pempek_assert.h; sourceTree = "<group>"; };
+		1A42F17C182EBA3600F3880C /* ppk_assert.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ppk_assert.cpp; sourceTree = "<group>"; };
+		1A42F17D182EBA3600F3880C /* ppk_assert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ppk_assert.h; sourceTree = "<group>"; };
 		1A42F17E182EBA4300F3880C /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		1A42F17F182EBA5000F3880C /* gtest-all.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "gtest-all.cc"; path = "gtest/gtest-all.cc"; sourceTree = "<group>"; };
 		1A42F180182EBA5000F3880C /* gtest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = gtest.h; path = gtest/gtest.h; sourceTree = "<group>"; };
-		1A42F181182EBA7900F3880C /* pempek_assert_test.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = pempek_assert_test.cpp; sourceTree = "<group>"; };
+		1A42F181182EBA7900F3880C /* ppk_assert_test.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ppk_assert_test.cpp; sourceTree = "<group>"; };
 		1A7A0B6618316C790099EA41 /* test copy */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "test copy"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A7A0B7118316D7E0099EA41 /* test-no-stl copy */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "test-no-stl copy"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A98FA0117A4249200BF09FF /* example */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = example; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -107,8 +107,8 @@
 		1A42F178182EB9EF00F3880C /* src */ = {
 			isa = PBXGroup;
 			children = (
-				1A42F17C182EBA3600F3880C /* pempek_assert.cpp */,
-				1A42F17D182EBA3600F3880C /* pempek_assert.h */,
+				1A42F17C182EBA3600F3880C /* ppk_assert.cpp */,
+				1A42F17D182EBA3600F3880C /* ppk_assert.h */,
 			);
 			name = src;
 			path = ../src;
@@ -118,7 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				1A42F17B182EBA2B00F3880C /* gtest */,
-				1A42F181182EBA7900F3880C /* pempek_assert_test.cpp */,
+				1A42F181182EBA7900F3880C /* ppk_assert_test.cpp */,
 			);
 			name = test;
 			path = ../test;
@@ -268,8 +268,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A7A0B5E18316C790099EA41 /* pempek_assert.cpp in Sources */,
-				1A7A0B5F18316C790099EA41 /* pempek_assert_test.cpp in Sources */,
+				1A7A0B5E18316C790099EA41 /* ppk_assert.cpp in Sources */,
+				1A7A0B5F18316C790099EA41 /* ppk_assert_test.cpp in Sources */,
 				1A7A0B6018316C790099EA41 /* gtest-all.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -278,8 +278,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A7A0B6918316D7E0099EA41 /* pempek_assert.cpp in Sources */,
-				1A7A0B6A18316D7E0099EA41 /* pempek_assert_test.cpp in Sources */,
+				1A7A0B6918316D7E0099EA41 /* ppk_assert.cpp in Sources */,
+				1A7A0B6A18316D7E0099EA41 /* ppk_assert_test.cpp in Sources */,
 				1A7A0B6B18316D7E0099EA41 /* gtest-all.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -289,7 +289,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A42F184182EBABC00F3880C /* main.cpp in Sources */,
-				1A42F182182EBAB500F3880C /* pempek_assert.cpp in Sources */,
+				1A42F182182EBAB500F3880C /* ppk_assert.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,8 +297,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A42F183182EBAB600F3880C /* pempek_assert.cpp in Sources */,
-				1A42F185182EBABF00F3880C /* pempek_assert_test.cpp in Sources */,
+				1A42F183182EBAB600F3880C /* ppk_assert.cpp in Sources */,
+				1A42F185182EBABF00F3880C /* ppk_assert_test.cpp in Sources */,
 				1A42F186182EBAC300F3880C /* gtest-all.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

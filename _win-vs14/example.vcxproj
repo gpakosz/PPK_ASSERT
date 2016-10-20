@@ -20,10 +20,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\example\main.cpp" />
-    <ClCompile Include="..\src\pempek_assert.cpp" />
+    <ClCompile Include="..\src\ppk_assert.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\pempek_assert.h" />
+    <ClInclude Include="..\src\ppk_assert.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7BC8C873-A2C7-43A1-BD8A-2F1731F3CB81}</ProjectGuid>

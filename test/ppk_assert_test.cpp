@@ -1,17 +1,17 @@
 #include <gtest/gtest.h>
 
 #define PPK_ASSERT_ENABLED 1
-#include <pempek_assert.h>
+#include <ppk_assert.h>
 
 #include <cstdlib>
 #include <cstring>
 
 
-using namespace pempek::assert;
+using namespace ppk::assert;
 
 namespace {
 
-  namespace implementation = pempek::assert::implementation;
+  namespace implementation = ppk::assert::implementation;
   namespace AssertLevel = implementation::AssertLevel;
   namespace AssertAction = implementation::AssertAction;
 
@@ -51,11 +51,11 @@ namespace {
 }
 
 #if defined(PPK_ASSERT_DISABLE_EXCEPTIONS)
-namespace pempek {
+namespace ppk {
 namespace assert {
 namespace implementation {
 
-  void throwException(const pempek::assert::AssertionException& e)
+  void throwException(const ppk::assert::AssertionException& e)
   {
     _file = e.file();
     _line = e.line();
@@ -66,7 +66,7 @@ namespace implementation {
 
 } // namespace implementation
 } // namespace assert
-} // namespace pempek
+} // namespace ppk
 #endif
 
 namespace {
@@ -100,13 +100,13 @@ namespace {
     PPK_ASSERT_WARNING(true, "always true, never fails");
 
     PPK_ASSERT_WARNING(false);
-    EXPECT_STREQ("pempek_assert_test.cpp", _file);
+    EXPECT_STREQ("ppk_assert_test.cpp", _file);
     EXPECT_EQ(PPK_ASSERT_LINE - 2, _line);
     EXPECT_EQ(AssertLevel::Warning, _level);
     EXPECT_STREQ(static_cast<const char*>(PPK_ASSERT_NULLPTR), _message);
 
     PPK_ASSERT_WARNING(false, "always false, always fails");
-    EXPECT_STREQ("pempek_assert_test.cpp", _file);
+    EXPECT_STREQ("ppk_assert_test.cpp", _file);
     EXPECT_EQ(PPK_ASSERT_LINE - 2, _line);
     EXPECT_EQ(AssertLevel::Warning, _level);
     EXPECT_STREQ("always false, always fails", _message);
@@ -115,7 +115,7 @@ namespace {
     int i = 123;
     float f = 123.456f;
     PPK_ASSERT_WARNING(false, "always false, always fails -- s: %s, i: %d, f: %3.3f", s, i, f);
-    EXPECT_STREQ("pempek_assert_test.cpp", _file);
+    EXPECT_STREQ("ppk_assert_test.cpp", _file);
     EXPECT_EQ(PPK_ASSERT_LINE - 2, _line);
     EXPECT_EQ(AssertLevel::Warning, _level);
     EXPECT_STREQ("always false, always fails -- s: foo, i: 123, f: 123.456", _message);
@@ -127,13 +127,13 @@ namespace {
     PPK_ASSERT(true, "always true, never fails");
 
     PPK_ASSERT(false);
-    EXPECT_STREQ("pempek_assert_test.cpp", _file);
+    EXPECT_STREQ("ppk_assert_test.cpp", _file);
     EXPECT_EQ(PPK_ASSERT_LINE - 2, _line);
     EXPECT_EQ(AssertLevel::Debug, _level);
     EXPECT_STREQ(static_cast<const char*>(PPK_ASSERT_NULLPTR), _message);
 
     PPK_ASSERT(false, "always false, always fails");
-    EXPECT_STREQ("pempek_assert_test.cpp", _file);
+    EXPECT_STREQ("ppk_assert_test.cpp", _file);
     EXPECT_EQ(PPK_ASSERT_LINE - 2, _line);
     EXPECT_EQ(AssertLevel::Debug, _level);
     EXPECT_STREQ("always false, always fails", _message);
@@ -142,7 +142,7 @@ namespace {
     int i = 123;
     float f = 123.456f;
     PPK_ASSERT_DEBUG(false, "always false, always fails -- s: %s, i: %d, f: %3.3f", s, i, f);
-    EXPECT_STREQ("pempek_assert_test.cpp", _file);
+    EXPECT_STREQ("ppk_assert_test.cpp", _file);
     EXPECT_EQ(PPK_ASSERT_LINE - 2, _line);
     EXPECT_EQ(AssertLevel::Debug, _level);
     EXPECT_STREQ("always false, always fails -- s: foo, i: 123, f: 123.456", _message);
@@ -154,13 +154,13 @@ namespace {
     PPK_ASSERT_DEBUG(true, "always true, never fails");
 
     PPK_ASSERT_DEBUG(false);
-    EXPECT_STREQ("pempek_assert_test.cpp", _file);
+    EXPECT_STREQ("ppk_assert_test.cpp", _file);
     EXPECT_EQ(PPK_ASSERT_LINE - 2, _line);
     EXPECT_EQ(AssertLevel::Debug, _level);
     EXPECT_STREQ(static_cast<const char*>(PPK_ASSERT_NULLPTR), _message);
 
     PPK_ASSERT_DEBUG(false, "always false, always fails");
-    EXPECT_STREQ("pempek_assert_test.cpp", _file);
+    EXPECT_STREQ("ppk_assert_test.cpp", _file);
     EXPECT_EQ(PPK_ASSERT_LINE - 2, _line);
     EXPECT_EQ(AssertLevel::Debug, _level);
     EXPECT_STREQ("always false, always fails", _message);
@@ -169,7 +169,7 @@ namespace {
     int i = 123;
     float f = 123.456f;
     PPK_ASSERT_DEBUG(false, "always false, always fails -- s: %s, i: %d, f: %3.3f", s, i, f);
-    EXPECT_STREQ("pempek_assert_test.cpp", _file);
+    EXPECT_STREQ("ppk_assert_test.cpp", _file);
     EXPECT_EQ(PPK_ASSERT_LINE - 2, _line);
     EXPECT_EQ(AssertLevel::Debug, _level);
     EXPECT_STREQ("always false, always fails -- s: foo, i: 123, f: 123.456", _message);
@@ -182,13 +182,13 @@ namespace {
 
 #if defined(PPK_ASSERT_DISABLE_EXCEPTIONS)
     PPK_ASSERT_ERROR(false);
-    EXPECT_STREQ("pempek_assert_test.cpp", _file);
+    EXPECT_STREQ("ppk_assert_test.cpp", _file);
     EXPECT_EQ(PPK_ASSERT_LINE - 2, _line);
     EXPECT_EQ(AssertLevel::Error, _level);
     EXPECT_STREQ(static_cast<const char*>(PPK_ASSERT_NULLPTR), _message);
 #else
     EXPECT_THROW(PPK_ASSERT_ERROR(false), AssertionException);
-    EXPECT_STREQ("pempek_assert_test.cpp", _file);
+    EXPECT_STREQ("ppk_assert_test.cpp", _file);
     EXPECT_EQ(PPK_ASSERT_LINE - 2, _line);
     EXPECT_EQ(AssertLevel::Error, _level);
     EXPECT_STREQ(static_cast<const char*>(PPK_ASSERT_NULLPTR), _message);
@@ -196,13 +196,13 @@ namespace {
 
 #if defined(PPK_ASSERT_DISABLE_EXCEPTIONS)
     PPK_ASSERT_ERROR(false, "always false, always fails");
-    EXPECT_STREQ("pempek_assert_test.cpp", _file);
+    EXPECT_STREQ("ppk_assert_test.cpp", _file);
     EXPECT_EQ(PPK_ASSERT_LINE - 2, _line);
     EXPECT_EQ(AssertLevel::Error, _level);
     EXPECT_STREQ("always false, always fails", _message);
 #else
     EXPECT_THROW(PPK_ASSERT_ERROR(false, "always false, always fails"), AssertionException);
-    EXPECT_STREQ("pempek_assert_test.cpp", _file);
+    EXPECT_STREQ("ppk_assert_test.cpp", _file);
     EXPECT_EQ(PPK_ASSERT_LINE - 2, _line);
     EXPECT_EQ(AssertLevel::Error, _level);
     EXPECT_STREQ("always false, always fails", _message);
@@ -213,13 +213,13 @@ namespace {
     float f = 123.456f;
 #if defined(PPK_ASSERT_DISABLE_EXCEPTIONS)
     PPK_ASSERT_ERROR(false, "always false, always fails -- s: %s, i: %d, f: %3.3f", s, i, f);
-    EXPECT_STREQ("pempek_assert_test.cpp", _file);
+    EXPECT_STREQ("ppk_assert_test.cpp", _file);
     EXPECT_EQ(PPK_ASSERT_LINE - 2, _line);
     EXPECT_EQ(AssertLevel::Error, _level);
     EXPECT_STREQ("always false, always fails -- s: foo, i: 123, f: 123.456", _message);
 #else
     EXPECT_THROW(PPK_ASSERT_ERROR(false, "always false, always fails -- s: %s, i: %d, f: %3.3f", s, i, f), AssertionException);
-    EXPECT_STREQ("pempek_assert_test.cpp", _file);
+    EXPECT_STREQ("ppk_assert_test.cpp", _file);
     EXPECT_EQ(PPK_ASSERT_LINE - 2, _line);
     EXPECT_EQ(AssertLevel::Error, _level);
     EXPECT_STREQ("always false, always fails -- s: foo, i: 123, f: 123.456", _message);
@@ -232,13 +232,13 @@ namespace {
     PPK_ASSERT_FATAL(true, "always true, never fails");
 
     PPK_ASSERT_FATAL(false);
-    EXPECT_STREQ("pempek_assert_test.cpp", _file);
+    EXPECT_STREQ("ppk_assert_test.cpp", _file);
     EXPECT_EQ(PPK_ASSERT_LINE - 2, _line);
     EXPECT_EQ(AssertLevel::Fatal, _level);
     EXPECT_STREQ(static_cast<const char*>(PPK_ASSERT_NULLPTR), _message);
 
     PPK_ASSERT_FATAL(false, "always false, always fails");
-    EXPECT_STREQ("pempek_assert_test.cpp", _file);
+    EXPECT_STREQ("ppk_assert_test.cpp", _file);
     EXPECT_EQ(PPK_ASSERT_LINE - 2, _line);
     EXPECT_EQ(AssertLevel::Fatal, _level);
     EXPECT_STREQ("always false, always fails", _message);
@@ -247,7 +247,7 @@ namespace {
     int i = 123;
     float f = 123.456f;
     PPK_ASSERT_FATAL(false, "always false, always fails -- s: %s, i: %d, f: %3.3f", s, i, f);
-    EXPECT_STREQ("pempek_assert_test.cpp", _file);
+    EXPECT_STREQ("ppk_assert_test.cpp", _file);
     EXPECT_EQ(PPK_ASSERT_LINE - 2, _line);
     EXPECT_EQ(AssertLevel::Fatal, _level);
     EXPECT_STREQ("always false, always fails -- s: foo, i: 123, f: 123.456", _message);
@@ -265,13 +265,13 @@ namespace {
     PPK_ASSERT_CUSTOM(1337, true, "always true, never fails");
 
     PPK_ASSERT_CUSTOM(1337, false);
-    EXPECT_STREQ("pempek_assert_test.cpp", _file);
+    EXPECT_STREQ("ppk_assert_test.cpp", _file);
     EXPECT_EQ(PPK_ASSERT_LINE - 2, _line);
     EXPECT_EQ(1337, _level);
     EXPECT_STREQ(static_cast<const char*>(PPK_ASSERT_NULLPTR), _message);
 
     PPK_ASSERT_CUSTOM(1337, false, "always false, always fails");
-    EXPECT_STREQ("pempek_assert_test.cpp", _file);
+    EXPECT_STREQ("ppk_assert_test.cpp", _file);
     EXPECT_EQ(PPK_ASSERT_LINE - 2, _line);
     EXPECT_EQ(1337, _level);
     EXPECT_STREQ("always false, always fails", _message);
@@ -280,7 +280,7 @@ namespace {
     int i = 123;
     float f = 123.456f;
     PPK_ASSERT_CUSTOM(1337, false, "always false, always fails -- s: %s, i: %d, f: %3.3f", s, i, f);
-    EXPECT_STREQ("pempek_assert_test.cpp", _file);
+    EXPECT_STREQ("ppk_assert_test.cpp", _file);
     EXPECT_EQ(PPK_ASSERT_LINE - 2, _line);
     EXPECT_EQ(1337, _level);
     EXPECT_STREQ("always false, always fails -- s: foo, i: 123, f: 123.456", _message);

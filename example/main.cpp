@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 
-#include <pempek_assert.h>
+#include <ppk_assert.h>
 
 // custom prefix
 #define ASSERT          PPK_ASSERT
@@ -41,7 +41,7 @@ ASSERT_USED(std::vector<int>) trigger_assert_unused_return_value1()
 
 #undef PPK_ASSERT_ENABLED
 #define PPK_ASSERT_ENABLED 0
-#include <pempek_assert.h>
+#include <ppk_assert.h>
 
 void trigger_assert_custom2()
 {
@@ -56,7 +56,7 @@ ASSERT_USED(int) trigger_assert_unused_return_value2()
 
 #undef PPK_ASSERT_ENABLED
 #define PPK_ASSERT_ENABLED 1
-#include <pempek_assert.h>
+#include <ppk_assert.h>
 
 #if defined(_WIN32)
 #define WIN32_LEAN_AND_MEAN
@@ -83,7 +83,7 @@ int main()
   {
     trigger_assert_error();
   }
-  catch(const pempek::assert::AssertionException& e)
+  catch(const ppk::assert::AssertionException& e)
   {
     std::cout << "AssertionException caught:" << std::endl;
     std::cout << "  [file]:       " << e.file() << std::endl;
