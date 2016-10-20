@@ -43,6 +43,18 @@
 
 */
 
+#undef PPKASSERT_EXPORT
+#if defined(WIN32) && defined(USING_DLL)
+#  ifdef BUILDING_PPKASSERT
+#    define PPKASSERT_EXPORT __declspec(dllexport)
+#  else
+#    define PPKASSERT_EXPORT __declspec(dllimport)
+#  endif
+#else
+#  define PPKASSERT_EXPORT
+#endif
+
+
 #if !defined(PPK_ASSERT_ENABLED)
   #if !defined(NDEBUG) // if we are in debug mode
     #define PPK_ASSERT_ENABLED 1 // enable them
@@ -460,7 +472,7 @@
     #define PPK_ASSERT_HANDLE_ASSERT_FORMAT
   #endif
 
-    AssertAction::AssertAction handleAssert(const char* file,
+    PPKASSERT_EXPORT AssertAction::AssertAction handleAssert(const char* file,
                                             int line,
                                             const char* function,
                                             const char* expression,
@@ -468,10 +480,10 @@
                                             bool* ignoreLine,
                                             const char* message, ...) PPK_ASSERT_HANDLE_ASSERT_FORMAT;
 
-    AssertHandler setAssertHandler(AssertHandler handler);
+    PPKASSERT_EXPORT AssertHandler setAssertHandler(AssertHandler handler);
 
-    void ignoreAllAsserts(bool value);
-    bool ignoreAllAsserts();
+    PPKASSERT_EXPORT void ignoreAllAsserts(bool value);
+    PPKASSERT_EXPORT bool ignoreAllAsserts();
 
   #if defined(PPK_ASSERT_CXX11)
 

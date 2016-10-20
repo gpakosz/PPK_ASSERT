@@ -5,10 +5,9 @@ srcdir=$(prefix)\src
 exampledir=$(prefix)\example
 
 CXX=cl
-AR=lib
 LD=link
 FLAGS=/c /Ox /MD -Gm- /nologo /EHsc
-LDFLAGS=/nologo# /SUBSYSTEM:WINDOWS
+LDFLAGS=/nologo
 CXXFLAGS= $(FLAGS)
 
 libname=ppkassert
@@ -19,22 +18,22 @@ OBJECTS=$(SOURCES:.cpp=.obj)
 
 all: build-lib build-example
 
-build-lib: $(libdir)\$(libname).lib
+build-lib: $(libdir)\$(libname).dll
 $(srcdir)\pempek_assert.obj: $(srcdir)\pempek_assert.cpp
-	$(CXX) $(CXXFLAGS) -I$(srcdir) $** /Fo$@
+	$(CXX) $(CXXFLAGS) /DBUILDING_PPKASSERT /DUSING_DLL  /I$(srcdir) $** /Fo$@
 $(libdir):
 	mkdir $(libdir)
-$(libdir)\$(libname).lib: $(libdir) $(srcdir)\pempek_assert.obj
-	$(AR) $(LDFLAGS) $(srcdir)\pempek_assert.obj  /OUT:$@
+$(libdir)\$(libname).dll: $(libdir) $(srcdir)\pempek_assert.obj
+	$(LD) $(LDFLAGS) /DLL $(srcdir)\pempek_assert.obj User32.lib /OUT:$@ /IMPLIB:$(libdir)\$(libname).lib
 
 
-build-example: $(bindir)\example.exe
+build-example: $(bindir)\example_shared.exe
 $(exampledir)\main.obj: $(exampledir)\main.cpp
-	$(CXX) $(CXXFLAGS) -I$(srcdir) $** /Fo$@
+	$(CXX) $(CXXFLAGS) /DUSING_DLL /I$(srcdir) $** /Fo$@
 $(bindir):
 	mkdir $(bindir)
-$(bindir)\example.exe: $(bindir) $(exampledir)\main.obj
-	$(LD) $(LDFLAGS) /LIBPATH:$(libdir) $(exampledir)\main.obj $(libname).lib User32.lib /OUT:$@
+$(bindir)\example_shared.exe: $(bindir) $(exampledir)\main.obj
+	$(LD) $(LDFLAGS) /LIBPATH:$(libdir) $(exampledir)\main.obj $(libname).lib /OUT:$@
 
 
 clean:
