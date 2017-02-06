@@ -177,7 +177,7 @@
           if (PPK_ASSERT_LIKELY(expression) || ppk::assert::implementation::ignoreAllAsserts());\
           else\
           {\
-            if (ppk::assert::implementation::handleAssert(PPK_ASSERT_FILE, PPK_ASSERT_LINE, PPK_ASSERT_FUNCTION, #expression, level, 0, __VA_ARGS__) == ppk::assert::implementation::AssertAction::Break)\
+            if (ppk::assert::implementation::handleAssert(PPK_ASSERT_FILE, PPK_ASSERT_LINE, PPK_ASSERT_FUNCTION, #expression, level, PPK_ASSERT_NULLPTR, __VA_ARGS__) == ppk::assert::implementation::AssertAction::Break)\
               PPK_ASSERT_DEBUG_BREAK();\
           }\
         }\
@@ -227,7 +227,7 @@
           else\
           {\
             _PPK_ASSERT_WFORMAT_AS_ERROR_BEGIN\
-            if (ppk::assert::implementation::handleAssert(PPK_ASSERT_FILE, PPK_ASSERT_LINE, PPK_ASSERT_FUNCTION, #expression, level, 0, __VA_ARGS__) == ppk::assert::implementation::AssertAction::Break)\
+            if (ppk::assert::implementation::handleAssert(PPK_ASSERT_FILE, PPK_ASSERT_LINE, PPK_ASSERT_FUNCTION, #expression, level, PPK_ASSERT_NULLPTR, __VA_ARGS__) == ppk::assert::implementation::AssertAction::Break)\
               PPK_ASSERT_DEBUG_BREAK();\
             _PPK_ASSERT_WFORMAT_AS_ERROR_END\
           }\
