@@ -17,9 +17,9 @@ ifeq ($(platform),)
   endif
 endif
 ifeq ($(architecture),)
-  __uname_p := $(shell sh -c 'uname -p 2>/dev/null | tr [A-Z] [a-z] || echo unknown-architecture')
+  __uname_m := $(shell sh -c 'uname -m 2>/dev/null | tr [A-Z] [a-z] || echo unknown-architecture')
 
-  architecture := $(__uname_p)
+  architecture := $(__uname_m)
 endif
 
 prefix := $(realpath ..)
