@@ -82,11 +82,11 @@ namespace {
 #if defined(PPK_ASSERT_LOG_FILE)
     struct Local
     {
-      static void log(const char* format, va_list args)
+      static void log(const char* _format, va_list _args)
       {
         if (FILE* f = fopen(PPK_ASSERT_LOG_FILE, "a"))
         {
-          vfprintf(f, format, args);
+          vfprintf(f, _format, _args);
           fclose(f);
         }
       }

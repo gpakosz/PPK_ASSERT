@@ -508,8 +508,8 @@
     }; // AssertUsedWrapper<int, T>
 
     template<int level, typename T>
-    inline AssertUsedWrapper<level, T>::AssertUsedWrapper(T&& t)
-      : t(std::forward<T>(t)), used(false)
+    inline AssertUsedWrapper<level, T>::AssertUsedWrapper(T&& _t)
+      : t(std::forward<T>(_t)), used(false)
     {}
 
     template<int level, typename T>
@@ -546,8 +546,8 @@
     }; // AssertUsedWrapper<int, T>
 
     template<int level, typename T>
-    PPK_ASSERT_ALWAYS_INLINE AssertUsedWrapper<level, T>::AssertUsedWrapper(const T& t)
-      : t(t), used(false)
+    PPK_ASSERT_ALWAYS_INLINE AssertUsedWrapper<level, T>::AssertUsedWrapper(const T& _t)
+      : t(_t), used(false)
     {}
 
     template<int level, typename T>
