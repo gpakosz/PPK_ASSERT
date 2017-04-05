@@ -134,6 +134,7 @@
   #define PPK_ASSERT_UNUSED(expression) (void)(true ? (void)0 : ((void)(expression)))
 
   #if defined(_WIN32)
+    extern void __cdecl __debugbreak(void);
     #define PPK_ASSERT_DEBUG_BREAK() __debugbreak()
   #else
     #if defined(__APPLE__)
