@@ -133,22 +133,24 @@
 
   #define PPK_ASSERT_UNUSED(expression) (void)(true ? (void)0 : ((void)(expression)))
 
-  #if defined(_WIN32)
-    extern void __cdecl __debugbreak(void);
-    #define PPK_ASSERT_DEBUG_BREAK() __debugbreak()
-  #else
-    #if defined(__APPLE__)
-      #include <TargetConditionals.h>
-    #endif
-    #if defined(__clang__) && !TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
-      #define PPK_ASSERT_DEBUG_BREAK() __builtin_debugtrap()
-    #elif defined(linux) || defined(__linux) || defined(__linux__) || defined(__APPLE__)
-      #include <signal.h>
-      #define PPK_ASSERT_DEBUG_BREAK() raise(SIGTRAP)
-    #elif defined(__GNUC__)
-      #define PPK_ASSERT_DEBUG_BREAK() __builtin_trap()
+  #if !defined(PPK_ASSERT_DEBUG_BREAK)
+    #if defined(_WIN32)
+      extern void __cdecl __debugbreak(void);
+      #define PPK_ASSERT_DEBUG_BREAK() __debugbreak()
     #else
-      #define PPK_ASSERT_DEBUG_BREAK() ((void)0)
+      #if defined(__APPLE__)
+        #include <TargetConditionals.h>
+      #endif
+      #if defined(__clang__) && !TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
+        #define PPK_ASSERT_DEBUG_BREAK() __builtin_debugtrap()
+      #elif defined(linux) || defined(__linux) || defined(__linux__) || defined(__APPLE__)
+        #include <signal.h>
+        #define PPK_ASSERT_DEBUG_BREAK() raise(SIGTRAP)
+      #elif defined(__GNUC__)
+        #define PPK_ASSERT_DEBUG_BREAK() __builtin_trap()
+      #else
+        #define PPK_ASSERT_DEBUG_BREAK() ((void)0)
+      #endif
     #endif
   #endif
 

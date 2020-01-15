@@ -251,7 +251,8 @@ You can customize the library's behavior by defining the following macros:
 - `PPK_ASSERT_MESSAGE_BUFFER_SIZE`
 - `PPK_ASSERT_DISABLE_IGNORE_LINE`: disables the injection of a `static bool`
   variable used to keep track whether the assertion should be ignored for the
-  remaining lifetime of the program.
+  remaining lifetime of the program
+- `PPK_ASSERT_DEBUG_BREAK`: lets you redefine programmatic breakpoints
 
 If you want to use a different prefix, provide your own header that includes
 `ppk_assert.h` and define the following:
