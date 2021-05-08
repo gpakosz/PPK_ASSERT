@@ -276,7 +276,7 @@ namespace assert {
   {
     if (!message)
     {
-      strncpy(_stack, "", size);
+      memset(_stack, 0, sizeof(char) * size);
       return;
     }
 
@@ -284,8 +284,8 @@ namespace assert {
 
     if (length < size) // message is short enough for the stack buffer
     {
-      strncpy(_stack, message, length);
-      strncpy(_stack + length, "", size - length); // pad with 0
+      memcpy(_stack, message, sizeof(char) * length);
+      memset(_stack + length, 0, sizeof(char) * (size - length)); // pad with 0
     }
     else // allocate storage on the heap
     {
@@ -293,12 +293,12 @@ namespace assert {
 
       if (!_heap) // allocation failed
       {
-        strncpy(_stack, message, size - 1); // stack fallback, truncate :/
+        memcpy(_stack, message, sizeof(char) * (size - 1)); // stack fallback, truncate :/
         _stack[size - 1] = 0;
       }
       else
       {
-        strncpy(_heap, message, length); // copy the message
+        memcpy(_heap, message, sizeof(char) * length); // copy the message
         _heap[length] = 0;
         _stack[size - 1] = 1; // mark the stack
       }
@@ -313,7 +313,7 @@ namespace assert {
 
     if (length < size) // message is short enough for the stack buffer
     {
-      strncpy(_stack, message, size); // pad with 0
+      memcpy(_stack, message, sizeof(char) * size); // pad with 0
     }
     else // allocate storage on the heap
     {
@@ -321,12 +321,12 @@ namespace assert {
 
       if (!_heap) // allocation failed
       {
-        strncpy(_stack, message, size - 1); // stack fallback, truncate :/
+        memcpy(_stack, message, sizeof(char) * (size - 1)); // stack fallback, truncate :/
         _stack[size - 1] = 0;
       }
       else
       {
-        strncpy(_heap, message, length); // copy the message
+        memcpy(_heap, message, sizeof(char) * length); // copy the message
         _heap[length] = 0;
         _stack[size - 1] = 1; // mark the stack
       }
@@ -355,7 +355,7 @@ namespace assert {
       if (_stack[size - 1])
         PPK_ASSERT_FREE(_heap);
 
-      strncpy(_stack, message, size);
+      memcpy(_stack, message, sizeof(char) * size);
     }
     else // allocate storage on the heap
     {
@@ -365,7 +365,7 @@ namespace assert {
 
         if (length <= _length)
         {
-          strncpy(_heap, message, _length); // copy the message, pad with 0
+          memcpy(_heap, message, sizeof(char) * _length); // copy the message, pad with 0
           return *this;
         }
         else
@@ -378,12 +378,12 @@ namespace assert {
 
       if (!_heap) // allocation failed
       {
-        strncpy(_stack, message, size - 1); // stack fallback, truncate :/
+        memcpy(_stack, message, sizeof(char) * (size - 1)); // stack fallback, truncate :/
         _stack[size - 1] = 0;
       }
       else
       {
-        strncpy(_heap, message, length); // copy the message
+        memcpy(_heap, message, sizeof(char) * length); // copy the message
         _heap[length] = 0;
         _stack[size - 1] = 1; // mark the stack
       }
